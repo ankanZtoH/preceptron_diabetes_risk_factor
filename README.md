@@ -30,7 +30,7 @@ make sure all the port is stopped
 
 # cd frontend
 # npm run dev-all
-
-
+//not related to run
+##### rm -rf .git
 
 
