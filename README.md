@@ -15,6 +15,10 @@ Now go to backend part
 # pip install -r requirements.txt
 // migrate it for db creation
 # python3 manage.py migrate
+
+// create admin panel 
+# python3 manage.py createsuperur
+
 // Run the server
 # python3 manage.py runserver
 
