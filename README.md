@@ -17,7 +17,7 @@ Now go to backend part
 # python3 manage.py migrate
 
 // create admin panel 
-# python3 manage.py createsuperur
+# python3 manage.py createsuperuser
 
 // Run the server
 # python3 manage.py runserver
