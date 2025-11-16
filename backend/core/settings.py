@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'health',
     "rest_framework",
     "corsheaders",
+    'import_export',  
 ]
 
 MIDDLEWARE = [
