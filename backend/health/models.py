@@ -36,10 +36,12 @@ class DiabetesRecord(models.Model):
     family_history = models.CharField(
         max_length=10,
         choices=[
-            ("none", "No Family History"),
-            ("extended", "2nd-degree Relative"),
-            ("close", "1st-degree Relative")
-        ]
+            ("zero", "No Family History"),
+            ("second", "2nd-degree Relative"),
+            ("first", "1st-degree Relative")
+        ],
+        blank=True,
+        null=True,
     )
 
     # 9. ADA Fasting Blood Sugar (mg/dL)
