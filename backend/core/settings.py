@@ -145,5 +145,9 @@ CORS_ALLOWED_ORIGINS = [
 
 CSRF_TRUSTED_ORIGINS = [
     "https://preceptrondiabetesriskfactor.vercel.app",
+    "https://preceptrondiabetesriskfactor-git-main-ankans-projects-b40bc80e.vercel.app",
+    "https://preceptrondiabetesriskfactor-2gnezi5w2-ankans-projects-b40bc80e.vercel.app"
 ]
+CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOW_METHODS = ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"]
