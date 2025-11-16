@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-d**#ce_lz394$een90%x=x70s+%h#l_w*bx6ixuwo4cw$&zm5q
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    "preceptron-diabetes-risk-factor.onrender.com",
+    "preceptron-diabetes-risk-factor.onrender.com   ",
     "localhost",
     "127.0.0.1",
 ]
@@ -138,7 +138,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # bottom of settings.py
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
-    "https://your-frontend.vercel.app",
+    "https://preceptrondiabetesriskfactor.vercel.app",
 ]
 # If you plan to allow everything in dev:
 # CORS_ALLOW_ALL_ORIGINS = True
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://preceptrondiabetesriskfactor.vercel.app",
+]
+CORS_ALLOW_CREDENTIALS = True
