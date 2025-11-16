@@ -565,7 +565,8 @@ export default function DiabetesRiskCalculator() {
   };
 
   try {
-    const response = await fetch("http://127.0.0.1:8000/api/save/", {
+    const API = process.env.NEXT_PUBLIC_API_URL;
+    const response = await fetch(`${API}/api/save/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"

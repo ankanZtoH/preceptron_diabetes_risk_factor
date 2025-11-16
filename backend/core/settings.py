@@ -138,6 +138,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # bottom of settings.py
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
+    "https://your-frontend.vercel.app",
 ]
 # If you plan to allow everything in dev:
 # CORS_ALLOW_ALL_ORIGINS = True
