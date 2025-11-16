@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-d**#ce_lz394$een90%x=x70s+%h#l_w*bx6ixuwo4cw$&zm5q
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    "preceptron-diabetes-risk-factor.onrender.com   ",
+    "preceptron-diabetes-risk-factor.onrender.com",
     "localhost",
     "127.0.0.1",
 ]
