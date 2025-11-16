@@ -25,7 +25,12 @@ SECRET_KEY = 'django-insecure-d**#ce_lz394$een90%x=x70s+%h#l_w*bx6ixuwo4cw$&zm5q
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    "preceptron-diabetes-risk-factor.onrender.com",
+    "localhost",
+    "127.0.0.1",
+]
+
 
 
 # Application definition
