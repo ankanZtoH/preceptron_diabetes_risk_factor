@@ -136,3 +136,7 @@ CORS_ALLOWED_ORIGINS = [
 ]
 # If you plan to allow everything in dev:
 # CORS_ALLOW_ALL_ORIGINS = True
+
+DJANGO_SUPERUSER_USERNAME = "admin"
+DJANGO_SUPERUSER_PASSWORD = "admin123"
+DJANGO_SUPERUSER_EMAIL = "admin@example.com"
