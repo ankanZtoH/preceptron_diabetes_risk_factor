@@ -67,7 +67,6 @@ function ResultsPage({
 
     setIdrsScore(score);
     setLoading(false);
-
   };
 
   const getIDRSRisk = (score: any) => {
@@ -146,7 +145,7 @@ function ResultsPage({
     }
   `}
           >
-            <div className="flex items-center mb-3">
+            <div className="flex items-center mb-2">
               <Scale
                 className={`w-5 h-5 mr-2 ${
                   bmi < 18
@@ -158,11 +157,11 @@ function ResultsPage({
                     : "text-red-600"
                 }`}
               />
-              <h3 className="font-bold text-gray-800">BMI</h3>
+              <h3 className="font-bold text-gray-800 text-lg">BMI</h3>
             </div>
 
             <div
-              className={`text-4xl font-bold mb-2 ${
+              className={`text-4xl font-bold mb-1 ${
                 bmi < 18
                   ? "text-blue-600"
                   : bmi < 23
@@ -172,11 +171,11 @@ function ResultsPage({
                   : "text-red-600"
               }`}
             >
-              {bmi.toFixed(1)}
+              {bmi.toFixed(1)} Kg/m<sup>2</sup>
             </div>
 
             <p
-              className={`text-xs font-semibold ${
+              className={`text-lg font-semibold ${
                 bmi < 18
                   ? "text-blue-600"
                   : bmi < 23
@@ -196,9 +195,9 @@ function ResultsPage({
             </p>
           </div>
 
-{/* 2. ADA Score (based on FBS) */}
-<div
-  className={`
+          {/* 2. ADA Score (based on FBS) */}
+          <div
+            className={`
     rounded-xl shadow-lg p-5 border-t-4
     ${
       data.formData.fbs < 140
@@ -208,134 +207,157 @@ function ResultsPage({
         : "border-red-500 bg-red-50"
     }
   `}
->
-  <div className="flex items-center mb-3">
-    <Activity
-      className={`w-5 h-5 mr-2 ${
-        data.formData.fbs < 140
-          ? "text-green-600"
-          : data.formData.fbs < 200
-          ? "text-yellow-600"
-          : "text-red-600"
-      }`}
-    />
-    <h3 className="font-bold text-gray-800">ADA Score (FBS)</h3>
-  </div>
+          >
+            <div className="flex items-center mb-3">
+              <Activity
+                className={`w-5 h-5 mr-2 ${
+                  data.formData.fbs < 140
+                    ? "text-green-600"
+                    : data.formData.fbs < 200
+                    ? "text-yellow-600"
+                    : "text-red-600"
+                }`}
+              />
+              <h3 className="font-bold text-gray-800">ADA Score (FBS)</h3>
+            </div>
 
-  {/* Value */}
-  <div
-    className={`text-4xl font-bold mb-1 ${
-      data.formData.fbs < 140
-        ? "text-green-600"
-        : data.formData.fbs < 200
-        ? "text-yellow-600"
-        : "text-red-600"
-    }`}
-  >
-    {data.formData.fbs} mg/dL
-  </div>
+            {/* Value */}
+            <div
+              className={`text-4xl font-bold mb-1 ${
+                data.formData.fbs < 140
+                  ? "text-green-600"
+                  : data.formData.fbs < 200
+                  ? "text-yellow-600"
+                  : "text-red-600"
+              }`}
+            >
+              {data.formData.fbs} mg/dL
+            </div>
 
-  {/* Meaning */}
-  <p
-    className={`text-sm font-semibold ${
-      data.formData.fbs < 140
-        ? "text-green-600"
-        : data.formData.fbs < 200
-        ? "text-yellow-600"
-        : "text-red-600"
-    }`}
-  >
-    {data.formData.fbs < 140
-      ? "🟢 Normal — Glucose regulation is normal."
-      : data.formData.fbs < 200
-      ? "🟡 Prediabetes Risk — Early metabolic disturbances."
-      : "🔴 Diabetes Range — Strong suspicion of diabetes."}
-  </p>
-</div>
-
+            {/* Meaning */}
+            <p
+              className={`text-lg font-semibold mb-2 ${
+                data.formData.fbs < 140
+                  ? "text-green-600"
+                  : data.formData.fbs < 200
+                  ? "text-yellow-600"
+                  : "text-red-600"
+              }`}
+            >
+              {data.formData.fbs < 140
+                ? "🟢 Normal"
+                : data.formData.fbs < 200
+                ? "🟡 Prediabetes Risk"
+                : "🔴 Diabetes Range"}
+            </p>
+            <p
+              className={`text-sm font-semibold  ${
+                data.formData.fbs < 140
+                  ? "text-green-600"
+                  : data.formData.fbs < 200
+                  ? "text-yellow-600"
+                  : "text-red-600"
+              }`}
+            >
+              {data.formData.fbs < 140
+                ? "* Glucose regulation is normal. Pancreas and insulin responce are functioning well."
+                : data.formData.fbs < 200
+                ? '* Early metabolic disturbances.This is the "Pay attention and fix" zone. Usually indicates rising insulin resistance.'
+                : "* Strong suspicion of diabetes expecially if repeated or accompained by symptoms. Require formal exluation with fasting glucose and HbA1c."}
+            </p>
+          </div>
 
           {/* 3. Risk Factor */}
-        {/* 3. Risk Factor with points + category */}
-<div
-  className={`
+          {/* 3. Risk Factor with points + category */}
+          <div
+            className={`
     ${data.risk?.bgColor || "bg-gray-50"} 
     rounded-xl shadow-lg p-5 border-t-4
     ${(data.risk?.color || "bg-gray-500").replace("bg-", "border-")}
   `}
->
-  <div className="flex items-center mb-3">
-    <AlertCircle
-      className={`w-5 h-5 mr-2 ${data.risk?.textColor || "text-gray-600"}`}
-    />
-    <h3 className="font-bold text-gray-800">Risk Level</h3>
-  </div>
+          >
+            <div className="flex items-center mb-2">
+              <AlertCircle
+                className={`w-5 h-5 mr-2 ${
+                  data.risk?.textColor || "text-gray-600"
+                }`}
+              />
+              <h3 className="font-bold text-gray-800 text-lg">Risk Level</h3>
+            </div>
 
-  <div
-    className={`text-2xl font-bold mb-1 ${
-      data.risk?.textColor || "text-gray-600"
-    }`}
-  >
-    {data.risk?.icon || "⚪"} {data.risk?.level}
-  </div>
 
-  <p className="text-md font-semibold">
-    <span className={`${data.risk?.textColor || "text-gray-600"}`}>
-      ({data.totalScore} points)
-    </span>
-  </p>
+            <p className=" text-4xl font-semibold  mb-1 flex">
+              <span className={`${data.risk?.textColor || "text-gray-600"}`}>
+                {data.totalScore}
+              </span>
+              <p className="text-sm flex pt-4 pl-1 text-red-600"> points</p>
+            </p>
 
-  <p className="text-xs text-gray-600 mt-1">
-    {data.risk?.message || "N/A"}
-  </p>
-</div>
+            <div
+              className={`text-lg font-bold mb-2 ${
+                data.risk?.textColor || "text-gray-600"
+              }`}
+            >
+              {data.risk?.icon || "⚪"} {data.risk?.level}
+            </div>
 
+           
+
+            <p className="text-sm font-bold text-gray-600 ml-2">
+              <span className={`${data.risk?.textColor || "text-gray-600"}`}>
+              * {data.risk?.message || "N/A"}
+              </span>
+            </p>
+          </div>
 
           {/* 4. IDRS Score */}
-<div
-  className={`
+          <div
+            className={`
     rounded-xl shadow-lg p-5 border-t-4
     ${(idrsRisk.color || "bg-gray-500").replace("bg-", "border-")}
     ${idrsRisk.bgColor || "bg-gray-50"}
   `}
->
-  <div className="flex items-center mb-3">
-    <Users className={`w-5 h-5 mr-2 ${idrsRisk.textColor}`} />
-    <h3 className="font-bold text-gray-800">IDRS</h3>
-  </div>
+          >
+            <div className="flex items-center mb-3">
+              <Users className={`w-5 h-5 mr-2 ${idrsRisk.textColor}`} />
+              <h3 className="font-bold text-lg text-gray-800">IDRS</h3>
+            </div>
 
-  {loading ? (
-    <div className="text-center py-4">
-      <div
-        className={`
+            {loading ? (
+              <div className="text-center py-4">
+                <div
+                  className={`
           animate-spin rounded-full h-8 w-8 border-b-2 mx-auto
           ${idrsRisk.textColor}
         `}
-        style={{ borderColor: "currentColor" }}
-      ></div>
-    </div>
-  ) : (
-    <>
-      <div className={`text-4xl font-bold mb-1 ${idrsRisk.textColor}`}>
-        {idrsScore}
-      </div>
+                  style={{ borderColor: "currentColor" }}
+                ></div>
+              </div>
+            ) : (
+              <>
+                <div
+                  className={`text-4xl font-bold mb-1 flex ${idrsRisk.textColor}`}
+                >
+                  {idrsScore}
+                  <p className="text-sm flex pt-4 pl-1"> points</p>
+                </div>
 
-      <p className={`text-sm font-semibold ${idrsRisk.textColor}`}>
-        {idrsRisk.icon} {idrsRisk.level}
-      </p>
-    </>
-  )}
-</div>
-
+                <p className={`text-lg font-semibold ${idrsRisk.textColor}`}>
+                  {idrsRisk.icon} {idrsRisk.level}
+                </p>
+              </>
+            )}
+          </div>
         </div>
 
         {/* Action Buttons */}
         <div className="flex gap-4 justify-center flex-wrap">
-          <button
+          {/* <button
             onClick={onBack}
             className="bg-gray-600 hover:bg-gray-700 text-white font-semibold py-3 px-6 rounded-lg"
           >
             ← Back to Form
-          </button>
+          </button> */}
           <button
             onClick={onRecalculate}
             className="bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-700 hover:to-red-700 text-white font-semibold py-3 px-6 rounded-lg"
@@ -353,7 +375,6 @@ function ResultsPage({
     </div>
   );
 }
-
 
 function FormRow({
   label,
@@ -389,16 +410,13 @@ function YesNoToggle({
       onClick={() => onChange(value === "yes" ? "no" : "yes")}
       className={`w-20 text-center py-2 rounded font-semibold border outline-none focus:border-4 focus:border-black
         ${
-          value === "yes"
-            ? "bg-green-600 text-white"
-            : "bg-red-600 text-white"
+          value === "yes" ? "bg-green-600 text-white" : "bg-red-600 text-white"
         }`}
     >
       {value === "yes" ? "YES" : "NO"}
     </button>
   );
 }
-
 
 export default function DiabetesRiskCalculator() {
   const [age, setAge] = useState("");
@@ -566,20 +584,17 @@ export default function DiabetesRiskCalculator() {
 
     setShowResults(true);
     window.scrollTo({ top: 0, behavior: "smooth" });
-
   };
 
   const handleRecalculate = () => {
     clearAllFields();
     setShowResults(false);
     window.scrollTo({ top: 0, behavior: "smooth" });
-
   };
 
   const handleBack = () => {
     setShowResults(false);
     window.scrollTo({ top: 0, behavior: "smooth" });
-
   };
 
   if (showResults) {
@@ -705,7 +720,7 @@ export default function DiabetesRiskCalculator() {
         color: "bg-yellow-500",
         textColor: "text-yellow-600",
         bgColor: "bg-yellow-50",
-        message: "Screening within 1 year",
+        message: "Recomended Screening within 1 year",
         icon: "🟡",
       };
     if (totalScore <= 20)
@@ -714,7 +729,7 @@ export default function DiabetesRiskCalculator() {
         color: "bg-orange-500",
         textColor: "text-orange-600",
         bgColor: "bg-orange-50",
-        message: "High probability",
+        message: "High probability of prediabetes",
         icon: "🟠",
       };
     return {
@@ -722,296 +737,289 @@ export default function DiabetesRiskCalculator() {
       color: "bg-red-500",
       textColor: "text-red-600",
       bgColor: "bg-red-50",
-      message: "Diagnostic testing",
+      message: "Strongly suggest Diagnostic testing",
       icon: "🔴",
     };
   };
 
-
   // Reusable Row Component (Left Label, Right Input)
 
-
   return (
+    <div className="min-h-screen bg-gray-100 px-4 py-8 flex justify-center">
+      <div className="bg-white w-full max-w-3xl shadow-xl rounded-lg p-8 border">
+        {/* Title */}
+        <h1 className="text-2xl font-bold text-center mb-6">
+          Diabetes Risk Assessment Form
+        </h1>
 
-
-  <div className="min-h-screen bg-gray-100 px-4 py-8 flex justify-center">
-    <div className="bg-white w-full max-w-3xl shadow-xl rounded-lg p-8 border">
-
-      {/* Title */}
-      <h1 className="text-2xl font-bold text-center mb-6">
-        Diabetes Risk Assessment Form
-      </h1>
-
-      {/* AGE */}
-      <FormRow label="Age" required>
-        <input
-          type="number"
-          value={age}
-          onChange={(e) => setAge(e.target.value)}
-          className="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black"
-          placeholder="Enter age"
-        />
-      </FormRow>
-
-      {/* GENDER */}
-      <FormRow label="Gender" required>
-        <div className="flex gap-3 ">
-          <button
-            onClick={() => setGender("male")}
-            className={`px-4 py-2 rounded border focus:outline-none focus:ring-2 focus:ring-black ${
-              gender === "male"
-                ? "bg-blue-500 text-white"
-                : "bg-gray-100 text-gray-700"
-            }`}
-          >
-            Male
-          </button>
-
-          <button
-            onClick={() => setGender("female")}
-            className={`px-4 py-2 rounded border focus:outline-none focus:ring-2 focus:ring-black ${
-              gender === "female"
-                ? "bg-pink-500 text-white"
-                : "bg-gray-100 text-gray-700"
-            }`}
-          >
-            Female
-          </button>
-        </div>
-      </FormRow>
-
-      {/* HEIGHT + WEIGHT */}
-      <FormRow label="Height & Weight" required>
-        <div className="flex flex-col gap-2">
-
-          {/* Unit Switch */}
-          <div className="flex gap-2">
-            <button
-              onClick={() => setHeightUnit("cm")}
-              className={`px-3 py-1 rounded border text-sm focus:outline-none focus:ring-2 focus:ring-black ${
-                heightUnit === "cm" ? "bg-blue-500 text-white" : "bg-gray-100"
-              }`}
-            >
-              cm
-            </button>
-
-            <button
-              onClick={() => setHeightUnit("feet")}
-              className={`px-3 py-1 rounded border text-sm focus:outline-none focus:ring-2 focus:ring-black ${
-                heightUnit === "feet" ? "bg-blue-500 text-white" : "bg-gray-100"
-              }`}
-            >
-              ft/in
-            </button>
-          </div>
-
-          {/* Height Inputs */}
-          <div key={heightUnit}>
-            {heightUnit === "cm" ? (
-              <input
-                type="number"
-                value={heightCm}
-                onChange={(e) => setHeightCm(e.target.value)}
-                className="border rounded px-3 py-2 w-full focus:outline-none focus:ring-2 focus:ring-black "
-                placeholder="Height (cm)"
-              />
-            ) : (
-              <div className="flex gap-2">
-                <input
-                  type="number"
-                  value={heightFeet}
-                  onChange={(e) => setHeightFeet(e.target.value)}
-                  className="border rounded px-3 py-2 w-1/2 focus:outline-none focus:ring-2 focus:ring-black"
-                  placeholder="Feet"
-                />
-                <input
-                  type="number"
-                  value={heightInches}
-                  onChange={(e) => setHeightInches(e.target.value)}
-                  className="border rounded px-3 py-2 w-1/2 focus:outline-none focus:ring-2 focus:ring-black"
-                  placeholder="Inches"
-                />
-              </div>
-            )}
-          </div>
-
-          {/* Weight */}
+        {/* AGE */}
+        <FormRow label="Age" required>
           <input
             type="number"
-            value={weight}
-            onChange={(e) => setWeight(e.target.value)}
-            className="border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black"
-            placeholder="Weight (kg)"
+            value={age}
+            onChange={(e) => setAge(e.target.value)}
+            className="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black"
+            placeholder="Enter age"
           />
-        </div>
-      </FormRow>
+        </FormRow>
 
-      {/* BMI */}
-      <FormRow label="Body Mass Index (BMI) : ">
-        <input
-          value={effectiveBMI ? effectiveBMI.toFixed(1) : ""}
-          readOnly
-          className="w-full border rounded px-3 py-2 bg-gray-100"
-        />
-      </FormRow>
-
-      {/* WAIST */}
-      <FormRow label="Waist" required>
-        <div className="flex flex-col gap-2">
-
-          {/* Unit Switch */}
-          <div className="flex gap-2">
+        {/* GENDER */}
+        <FormRow label="Gender" required>
+          <div className="flex gap-3 ">
             <button
-              onClick={() => setWaistUnit("cm")}
-              className={`px-3 py-1 rounded border text-sm focus:outline-none focus:ring-2 focus:ring-black ${
-                waistUnit === "cm" ? "bg-blue-500 text-white" : "bg-gray-100"
+              onClick={() => setGender("male")}
+              className={`px-4 py-2 rounded border focus:outline-none focus:ring-2 focus:ring-black ${
+                gender === "male"
+                  ? "bg-blue-500 text-white"
+                  : "bg-gray-100 text-gray-700"
               }`}
             >
-              cm
+              Male
             </button>
 
             <button
-              onClick={() => setWaistUnit("inch")}
-              className={`px-3 py-1 rounded border text-sm focus:outline-none focus:ring-2 focus:ring-black ${
-                waistUnit === "inch" ? "bg-blue-500 text-white" : "bg-gray-100"
+              onClick={() => setGender("female")}
+              className={`px-4 py-2 rounded border focus:outline-none focus:ring-2 focus:ring-black ${
+                gender === "female"
+                  ? "bg-pink-500 text-white"
+                  : "bg-gray-100 text-gray-700"
               }`}
             >
-              inch
+              Female
             </button>
           </div>
+        </FormRow>
 
-          {/* Inputs */}
-          <div key={waistUnit}>
-            {waistUnit === "cm" ? (
-              <input
-                type="number"
-                value={waistCm}
-                onChange={(e) => setWaistCm(e.target.value)}
-                className="border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black"
-                placeholder="Waist (cm)"
-              />
-            ) : (
-              <input
-                type="number"
-                value={waistInch}
-                onChange={(e) => setWaistInch(e.target.value)}
-                className="border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black"
-                placeholder="Waist (inch)"
-              />
-            )}
+        {/* HEIGHT + WEIGHT */}
+        <FormRow label="Height & Weight" required>
+          <div className="flex flex-col gap-2">
+            {/* Unit Switch */}
+            <div className="flex gap-2">
+              <button
+                onClick={() => setHeightUnit("cm")}
+                className={`px-3 py-1 rounded border text-sm focus:outline-none focus:ring-2 focus:ring-black ${
+                  heightUnit === "cm" ? "bg-blue-500 text-white" : "bg-gray-100"
+                }`}
+              >
+                cm
+              </button>
+
+              <button
+                onClick={() => setHeightUnit("feet")}
+                className={`px-3 py-1 rounded border text-sm focus:outline-none focus:ring-2 focus:ring-black ${
+                  heightUnit === "feet"
+                    ? "bg-blue-500 text-white"
+                    : "bg-gray-100"
+                }`}
+              >
+                ft/in
+              </button>
+            </div>
+
+            {/* Height Inputs */}
+            <div key={heightUnit}>
+              {heightUnit === "cm" ? (
+                <input
+                  type="number"
+                  value={heightCm}
+                  onChange={(e) => setHeightCm(e.target.value)}
+                  className="border rounded px-3 py-2 w-full focus:outline-none focus:ring-2 focus:ring-black "
+                  placeholder="Height (cm)"
+                />
+              ) : (
+                <div className="flex gap-2">
+                  <input
+                    type="number"
+                    value={heightFeet}
+                    onChange={(e) => setHeightFeet(e.target.value)}
+                    className="border rounded px-3 py-2 w-1/2 focus:outline-none focus:ring-2 focus:ring-black"
+                    placeholder="Feet"
+                  />
+                  <input
+                    type="number"
+                    value={heightInches}
+                    onChange={(e) => setHeightInches(e.target.value)}
+                    className="border rounded px-3 py-2 w-1/2 focus:outline-none focus:ring-2 focus:ring-black"
+                    placeholder="Inches"
+                  />
+                </div>
+              )}
+            </div>
+
+            {/* Weight */}
+            <input
+              type="number"
+              value={weight}
+              onChange={(e) => setWeight(e.target.value)}
+              className="border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black"
+              placeholder="Weight (kg)"
+            />
           </div>
+        </FormRow>
+
+        {/* BMI */}
+        <FormRow label="Body Mass Index (BMI) : ">
+          <input
+            value={effectiveBMI ? effectiveBMI.toFixed(1) : ""}
+            readOnly
+            className="w-full border rounded px-3 py-2 bg-gray-100"
+          />
+        </FormRow>
+
+        {/* WAIST */}
+        <FormRow label="Waist" required>
+          <div className="flex flex-col gap-2">
+            {/* Unit Switch */}
+            <div className="flex gap-2">
+              <button
+                onClick={() => setWaistUnit("cm")}
+                className={`px-3 py-1 rounded border text-sm focus:outline-none focus:ring-2 focus:ring-black ${
+                  waistUnit === "cm" ? "bg-blue-500 text-white" : "bg-gray-100"
+                }`}
+              >
+                cm
+              </button>
+
+              <button
+                onClick={() => setWaistUnit("inch")}
+                className={`px-3 py-1 rounded border text-sm focus:outline-none focus:ring-2 focus:ring-black ${
+                  waistUnit === "inch"
+                    ? "bg-blue-500 text-white"
+                    : "bg-gray-100"
+                }`}
+              >
+                inch
+              </button>
+            </div>
+
+            {/* Inputs */}
+            <div key={waistUnit}>
+              {waistUnit === "cm" ? (
+                <input
+                  type="number"
+                  value={waistCm}
+                  onChange={(e) => setWaistCm(e.target.value)}
+                  className="border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black"
+                  placeholder="Waist (cm)"
+                />
+              ) : (
+                <input
+                  type="number"
+                  value={waistInch}
+                  onChange={(e) => setWaistInch(e.target.value)}
+                  className="border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black"
+                  placeholder="Waist (inch)"
+                />
+              )}
+            </div>
+          </div>
+        </FormRow>
+
+        {/* ACTIVITY */}
+        <FormRow label="Daily Activity">
+          <YesNoToggle
+            value={physicalActivity}
+            onChange={setPhysicalActivity}
+          />
+        </FormRow>
+
+        {/* FRUITS */}
+        <FormRow label="Fruits / Vegetables">
+          <YesNoToggle value={fruitVeg} onChange={setFruitVeg} />
+        </FormRow>
+
+        {/* BP MEDICATION */}
+        <FormRow label="BP Medication">
+          <YesNoToggle value={bpMedication} onChange={setBpMedication} />
+        </FormRow>
+
+        {/* HIGH SUGAR */}
+        <FormRow label="High Blood Sugar Before">
+          <YesNoToggle value={highBloodSugar} onChange={setHighBloodSugar} />
+        </FormRow>
+
+        {/* FAMILY HISTORY */}
+        <FormRow label="Family History" required>
+          <select
+            value={familyHistory}
+            onChange={(e) => setFamilyHistory(e.target.value)}
+            className="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black"
+          >
+            <option value="none">Select</option>
+            <option value="zero">No family history</option>
+            <option value="first">Parent/Sibling (1st degree)</option>
+            <option value="second">Grandparents/Aunt (2nd degree)</option>
+          </select>
+        </FormRow>
+
+        {/* FBS */}
+        <FormRow label="Fasting Blood Sugar" required>
+          <input
+            type="number"
+            value={fbs}
+            onChange={(e) => setFbs(e.target.value)}
+            className="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black"
+            placeholder="mg/dL"
+          />
+        </FormRow>
+
+        {/* BUTTON */}
+        <div className="text-center mt-6">
+          <button
+            onClick={handleCalculate}
+            className="px-6 py-3 bg-blue-600 text-white font-bold rounded-lg shadow cursor-pointer"
+          >
+            Calculate Risk
+          </button>
         </div>
-      </FormRow>
 
-      {/* ACTIVITY */}
-      <FormRow label="Daily Activity">
-        <YesNoToggle
-          value={physicalActivity}
-          onChange={setPhysicalActivity}
-        />
-      </FormRow>
-
-      {/* FRUITS */}
-      <FormRow label="Fruits / Vegetables">
-        <YesNoToggle value={fruitVeg} onChange={setFruitVeg} />
-      </FormRow>
-
-      {/* BP MEDICATION */}
-      <FormRow label="BP Medication">
-        <YesNoToggle value={bpMedication} onChange={setBpMedication} />
-      </FormRow>
-
-      {/* HIGH SUGAR */}
-      <FormRow label="High Blood Sugar Before">
-        <YesNoToggle
-          value={highBloodSugar}
-          onChange={setHighBloodSugar}
-        />
-      </FormRow>
-
-      {/* FAMILY HISTORY */}
-      <FormRow label="Family History" required>
-        <select
-          value={familyHistory}
-          onChange={(e) => setFamilyHistory(e.target.value)}
-          className="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black"
-        >
-          <option value="none">Select</option>
-          <option value="zero">No family history</option>
-          <option value="first">Parent/Sibling (1st degree)</option>
-          <option value="second">Grandparents/Aunt (2nd degree)</option>
-        </select>
-      </FormRow>
-
-      {/* FBS */}
-      <FormRow label="Fasting Blood Sugar" required>
-        <input
-          type="number"
-          value={fbs}
-          onChange={(e) => setFbs(e.target.value)}
-          className="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black"
-          placeholder="mg/dL"
-        />
-      </FormRow>
-
-      {/* BUTTON */}
-      <div className="text-center mt-6">
-        <button
-          onClick={handleCalculate}
-          className="px-6 py-3 bg-blue-600 text-white font-bold rounded-lg shadow"
-        >
-          Calculate Risk
-        </button>
-      </div>
-
-      {/* Keep your modal intact */}
-      {showErrorModal && (
-  <div
-    className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4"
-    onClick={() => setShowErrorModal(false)}
-  >
-    <div
-      className="bg-white w-full max-w-md rounded-xl shadow-xl p-6"
-      onClick={(e) => e.stopPropagation()}
-    >
-      <div className="flex justify-between items-center mb-4">
-        <div className="flex items-center gap-2">
-          <AlertCircle className="w-6 h-6 text-red-600" />
-          <h2 className="text-lg font-bold text-gray-800">Required Fields</h2>
-        </div>
-        <button onClick={() => setShowErrorModal(false)}>
-          <X className="w-5 h-5 text-gray-500" />
-        </button>
-      </div>
-
-      {/* Error List */}
-      <div className="max-h-56 overflow-y-auto mb-4">
-        <ul className="space-y-2">
-          {validationErrors.map((err, index) => (
-            <li
-              key={index}
-              className="text-sm bg-red-50 p-2 border border-red-200 rounded text-red-700"
+        {/* Keep your modal intact */}
+        {showErrorModal && (
+          <div
+            className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4"
+            onClick={() => setShowErrorModal(false)}
+          >
+            <div
+              className="bg-white w-full max-w-md rounded-xl shadow-xl p-6"
+              onClick={(e) => e.stopPropagation()}
             >
-              • {err}
-            </li>
-          ))}
-        </ul>
+              <div className="flex justify-between items-center mb-4">
+                <div className="flex items-center gap-2">
+                  <AlertCircle className="w-6 h-6 text-red-600" />
+                  <h2 className="text-lg font-bold text-gray-800">
+                    Required Fields
+                  </h2>
+                </div>
+                <button onClick={() => setShowErrorModal(false)}>
+                  <X className="w-5 h-5 text-gray-500" />
+                </button>
+              </div>
+
+              {/* Error List */}
+              <div className="max-h-56 overflow-y-auto mb-4">
+                <ul className="space-y-2">
+                  {validationErrors.map((err, index) => (
+                    <li
+                      key={index}
+                      className="text-sm bg-red-50 p-2 border border-red-200 rounded text-red-700"
+                    >
+                      • {err}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* Close Button */}
+              <button
+                onClick={() => setShowErrorModal(false)}
+                className="w-full bg-red-600 text-white py-2 rounded-lg font-semibold hover:bg-red-700"
+              >
+                Got it
+              </button>
+            </div>
+          </div>
+        )}
       </div>
-
-      {/* Close Button */}
-      <button
-        onClick={() => setShowErrorModal(false)}
-        className="w-full bg-red-600 text-white py-2 rounded-lg font-semibold hover:bg-red-700"
-      >
-        Got it
-      </button>
     </div>
-  </div>
-)}
-
-    </div>
-  </div>
-
-
   );
 }
