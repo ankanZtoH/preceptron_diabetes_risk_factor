@@ -128,141 +128,70 @@ function ResultsPage({
 
         {/* 4 Key Metrics Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
-          {/* 1. BMI */}
-          {/* 1. BMI */}
-          <div
-            className={`
-    rounded-xl shadow-lg p-5 border-t-4
-    ${
-      bmi < 18
-        ? "border-blue-500 bg-blue-50"
-        : bmi < 23
-        ? "border-green-500 bg-green-50"
-        : bmi < 25
-        ? "border-yellow-500 bg-yellow-50"
-        : "border-red-500 bg-red-50"
-    }
-  `}
-          >
-            <div className="flex items-center mb-2">
-              <Scale
-                className={`w-5 h-5 mr-2 ${
-                  bmi < 18
-                    ? "text-blue-600"
-                    : bmi < 23
-                    ? "text-green-600"
-                    : bmi < 25
-                    ? "text-yellow-600"
-                    : "text-red-600"
-                }`}
-              />
-              <h3 className="font-bold text-gray-800 text-lg">BMI</h3>
-            </div>
-
-            <div
-              className={`text-4xl font-bold mb-1 ${
-                bmi < 18
-                  ? "text-blue-600"
-                  : bmi < 23
-                  ? "text-green-600"
-                  : bmi < 25
-                  ? "text-yellow-600"
-                  : "text-red-600"
-              }`}
-            >
-              {bmi.toFixed(1)} Kg/m<sup>2</sup>
-            </div>
-
-            <p
-              className={`text-lg font-semibold ${
-                bmi < 18
-                  ? "text-blue-600"
-                  : bmi < 23
-                  ? "text-green-600"
-                  : bmi < 25
-                  ? "text-yellow-600"
-                  : "text-red-600"
-              }`}
-            >
-              {bmi < 18
-                ? "🔵 Underweight"
-                : bmi < 23
-                ? "🟢 Normal"
-                : bmi < 25
-                ? "🟡 Overweight"
-                : "🔴 Obesity"}
-            </p>
-          </div>
-
           {/* 2. ADA Score (based on FBS) */}
           <div
             className={`
     rounded-xl shadow-lg p-5 border-t-4
-    ${
-      data.formData.fbs < 140
-        ? "border-green-500 bg-green-50"
-        : data.formData.fbs < 200
-        ? "border-yellow-500 bg-yellow-50"
-        : "border-red-500 bg-red-50"
-    }
+    ${data.formData.fbs < 140
+                ? "border-green-500 bg-green-50"
+                : data.formData.fbs < 200
+                  ? "border-yellow-500 bg-yellow-50"
+                  : "border-red-500 bg-red-50"
+              }
   `}
           >
             <div className="flex items-center mb-3">
               <Activity
-                className={`w-5 h-5 mr-2 ${
-                  data.formData.fbs < 140
+                className={`w-5 h-5 mr-2 ${data.formData.fbs < 140
                     ? "text-green-600"
                     : data.formData.fbs < 200
-                    ? "text-yellow-600"
-                    : "text-red-600"
-                }`}
+                      ? "text-yellow-600"
+                      : "text-red-600"
+                  }`}
               />
               <h3 className="font-bold text-gray-800">ADA Score (FBS)</h3>
             </div>
 
             {/* Value */}
             <div
-              className={`text-4xl font-bold mb-1 ${
-                data.formData.fbs < 140
+              className={`text-4xl font-bold mb-1 ${data.formData.fbs < 140
                   ? "text-green-600"
                   : data.formData.fbs < 200
-                  ? "text-yellow-600"
-                  : "text-red-600"
-              }`}
+                    ? "text-yellow-600"
+                    : "text-red-600"
+                }`}
             >
               {data.formData.fbs} mg/dL
             </div>
 
             {/* Meaning */}
             <p
-              className={`text-lg font-semibold mb-2 ${
-                data.formData.fbs < 140
+              className={`text-lg font-semibold mb-2 ${data.formData.fbs < 140
                   ? "text-green-600"
                   : data.formData.fbs < 200
-                  ? "text-yellow-600"
-                  : "text-red-600"
-              }`}
+                    ? "text-yellow-600"
+                    : "text-red-600"
+                }`}
             >
               {data.formData.fbs < 140
                 ? "🟢 Normal"
                 : data.formData.fbs < 200
-                ? "🟡 Prediabetes Risk"
-                : "🔴 Diabetes Range"}
+                  ? "🟡 Prediabetes Risk"
+                  : "🔴 Diabetes Range"}
             </p>
             <p
-              className={`text-sm font-semibold  ${
-                data.formData.fbs < 140
+              className={`text-sm font-semibold  ${data.formData.fbs < 140
                   ? "text-green-600"
                   : data.formData.fbs < 200
-                  ? "text-yellow-600"
-                  : "text-red-600"
-              }`}
+                    ? "text-yellow-600"
+                    : "text-red-600"
+                }`}
             >
               {data.formData.fbs < 140
                 ? "* Glucose regulation is normal. Pancreas and insulin responce are functioning well."
                 : data.formData.fbs < 200
-                ? '* Early metabolic disturbances.This is the "Pay attention and fix" zone. Usually indicates rising insulin resistance.'
-                : "* Strong suspicion of diabetes expecially if repeated or accompained by symptoms. Require formal exluation with fasting glucose and HbA1c."}
+                  ? '* Early metabolic disturbances.This is the "Pay attention and fix" zone. Usually indicates rising insulin resistance.'
+                  : "* Strong suspicion of diabetes expecially if repeated or accompained by symptoms. Require formal exluation with fasting glucose and HbA1c."}
             </p>
           </div>
 
@@ -276,294 +205,381 @@ function ResultsPage({
           >
             <div className="flex items-center mb-2">
               <AlertCircle
-                className={`w-5 h-5 mr-2 ${
-                  data.risk?.textColor || "text-gray-600"
-                }`}
+                className={`w-5 h-5 mr-2 ${data.risk?.textColor || "text-gray-600"
+                  }`}
               />
               <h3 className="font-bold text-gray-800 text-lg">FINDRISK</h3>
             </div>
 
-            <p className=" text-4xl font-semibold  mb-1 flex">
+            {/* Score */}
+            <p className="text-4xl font-semibold mb-1 flex">
               <span className={`${data.risk?.textColor || "text-gray-600"}`}>
                 {data.totalScore} / 34
               </span>
-              
             </p>
 
+            {/* Category */}
             <div
-              className={`text-lg font-bold mb-2 ${
-                data.risk?.textColor || "text-gray-600"
-              }`}
+              className={`text-lg font-bold mb-2 ${data.risk?.textColor || "text-gray-600"
+                }`}
             >
               {data.risk?.icon || "⚪"} {data.risk?.level}
             </div>
 
-            <p className="text-sm font-bold text-gray-600 ml-2">
+            {/* Short Message */}
+            <p className="text-sm font-bold ml-2">
               <span className={`${data.risk?.textColor || "text-gray-600"}`}>
                 * {data.risk?.message || "N/A"}
               </span>
             </p>
+
+            {/* Awareness - Doctor Recommended */}
+            <p
+              className={`mt-3 text-sm font-semibold ${data.risk?.textColor || "text-gray-600"
+                }`}
+            >
+              {data.totalScore <= 7
+                ? "✔ Low risk. Maintain a healthy diet, stay active, and monitor weight to keep your risk low."
+                : data.totalScore <= 14
+                  ? "⚠ Moderate risk. Focus on lifestyle changes such as daily 30 mins walking, reducing sugar & starch intake."
+                  : data.totalScore <= 20
+                    ? "⚠ High risk. You may be developing insulin resistance. Early lifestyle correction is strongly advised."
+                    : "❗ Very high risk. You have a high chance of developing diabetes. Please consult a doctor for clinical testing (FBS, HbA1c)."}
+            </p>
           </div>
 
-
-{/* BLOOD PRESSURE CARD */}
-<div
-  className={`
-    rounded-xl shadow-lg p-5 border-t-4
-    ${
-      data.formData.systolic < 120 && data.formData.diastolic < 80
-        ? "border-green-500 bg-green-50"
-        : data.formData.systolic < 140
-        ? "border-yellow-500 bg-yellow-50"
-        : "border-red-500 bg-red-50"
-    }
-  `}
->
-  <div className="flex items-center mb-2">
-    <Pill
-      className={`w-5 h-5 mr-2 ${
-        data.formData.systolic < 120 && data.formData.diastolic < 80
-          ? "text-green-600"
-          : data.formData.systolic < 140
-          ? "text-yellow-600"
-          : "text-red-600"
-      }`}
-    />
-    <h3 className="font-bold text-lg text-gray-800">Blood Pressure</h3>
-  </div>
-
-  {/* BP VALUE (Color Coded) */}
-  <div
-    className={`
-      text-4xl font-bold mb-1
-      ${
-        data.formData.systolic < 120 && data.formData.diastolic < 80
-          ? "text-green-600"
-          : data.formData.systolic < 140
-          ? "text-yellow-600"
-          : "text-red-600"
-      }
-    `}
-  >
-    {data.formData.systolic}/{data.formData.diastolic} mmHg
-  </div>
-
-  {/* CONDITION LABEL */}
-  <p
-    className={`
-      text-lg font-bold mb-1
-      ${
-        data.formData.systolic < 120 && data.formData.diastolic < 80
-          ? "text-green-600"
-          : data.formData.systolic < 140
-          ? "text-yellow-600"
-          : "text-red-600"
-      }
-    `}
-  >
-    {data.formData.systolic < 120 && data.formData.diastolic < 80
-      ? "🟢 Normal Blood Pressure"
-      : data.formData.systolic < 140
-      ? "🟡 Pre-Hypertension"
-      : "🔴 High Blood Pressure (Hypertension)"}
-  </p>
-
-  {/* SHORT AWARENESS MESSAGE */}
-  <p className="text-sm font-semibold text-gray-700 mt-1">
-    {data.formData.systolic < 120 && data.formData.diastolic < 80
-      ? "* Your BP is within healthy range. Keep maintaining a balanced diet, exercise, and stress control."
-      : data.formData.systolic < 140
-      ? "* This is an early warning stage. Indicates increasing heart and artery pressure. Lifestyle correction recommended."
-      : "* BP is high. This increases risk of heart disease, stroke, and kidney damage. Medical evaluation is advised."}
-  </p>
-
-  {/* EXTRA PATIENT AWARENESS LINE */}
-  <p
-    className={`
-      text-xs mt-2 font-semibold
-      ${
-        data.formData.systolic < 120 && data.formData.diastolic < 80
-          ? "text-green-700"
-          : data.formData.systolic < 140
-          ? "text-yellow-700"
-          : "text-red-700"
-      }
-    `}
-  >
-    {data.formData.systolic < 120 && data.formData.diastolic < 80
-      ? "✔ Good BP helps protect your heart, kidneys, and eyes."
-      : data.formData.systolic < 140
-      ? "⚠ Pre-hypertension can progress to hypertension if ignored."
-      : "❗ Uncontrolled BP can lead to heart attack or stroke."}
-  </p>
-</div>
-
-
-{/* PULSE RATE CARD */}
-<div
-  className={`
-    rounded-xl shadow-lg p-5 border-t-4
-    ${
-      data.formData.pulse >= 60 && data.formData.pulse <= 100
-        ? "border-green-500 bg-green-50"
-        : data.formData.pulse < 60
-        ? "border-yellow-500 bg-yellow-50"
-        : "border-red-500 bg-red-50"
-    }
-  `}
->
-  <div className="flex items-center mb-3">
-    <Activity
-      className={`w-5 h-5 mr-2 ${
-        data.formData.pulse >= 60 && data.formData.pulse <= 100
-          ? "text-green-600"
-          : data.formData.pulse < 60
-          ? "text-yellow-600"
-          : "text-red-600"
-      }`}
-    />
-    <h3 className="font-bold text-lg text-gray-800">Pulse Rate</h3>
-  </div>
-
-  {/* PULSE VALUE */}
-  <div
-    className={`
-      text-4xl font-bold mb-1
-      ${
-        data.formData.pulse >= 60 && data.formData.pulse <= 100
-          ? "text-green-600"
-          : data.formData.pulse < 60
-          ? "text-yellow-600"
-          : "text-red-600"
-      }
-    `}
-  >
-    {data.formData.pulse} BPM
-  </div>
-
-  {/* CONDITION */}
-  <p
-    className={`
-      text-lg font-bold mb-1
-      ${
-        data.formData.pulse >= 60 && data.formData.pulse <= 100
-          ? "text-green-600"
-          : data.formData.pulse < 60
-          ? "text-yellow-600"
-          : "text-red-600"
-      }
-    `}
-  >
-    {data.formData.pulse >= 60 && data.formData.pulse <= 100
-      ? "🟢 Normal Pulse"
-      : data.formData.pulse < 60
-      ? "🟡 Low Pulse (Bradycardia)"
-      : "🔴 High Pulse (Tachycardia)"}
-  </p>
-
-  {/* AWARENESS MESSAGE */}
-  <p className="text-sm font-semibold text-gray-700">
-    {data.formData.pulse >= 60 && data.formData.pulse <= 100
-      ? "* Indicates a healthy heart rhythm and stable circulation."
-      : data.formData.pulse < 60
-      ? "* Low pulse may be normal for athletes but can indicate thyroid or heart rhythm issues if symptomatic."
-      : "* High pulse may be due to stress, dehydration, fever or heart rhythm issues. Monitor regularly."}
-  </p>
-
-  {/* EXTRA AWARENESS LINE */}
-  <p
-    className={`
-      text-xs mt-2 font-semibold
-      ${
-        data.formData.pulse >= 60 && data.formData.pulse <= 100
-          ? "text-green-700"
-          : data.formData.pulse < 60
-          ? "text-yellow-700"
-          : "text-red-700"
-      }
-    `}
-  >
-    {data.formData.pulse >= 60 && data.formData.pulse <= 100
-      ? "✔ Good pulse supports healthy oxygen & blood circulation."
-      : data.formData.pulse < 60
-      ? "⚠ Consult a doctor if low pulse is accompanied by dizziness or fatigue."
-      : "❗ Persistent high pulse needs medical attention."}
-  </p>
-</div>
-
-         {/* IDRS SCORE CARD */}
-<div
-  className={`
+          {/* IDRS SCORE CARD */}
+          <div
+            className={`
     rounded-xl shadow-lg p-5 border-t-4
     ${(idrsRisk.color || "bg-gray-500").replace("bg-", "border-")}
     ${idrsRisk.bgColor || "bg-gray-50"}
   `}
->
-  <div className="flex items-center mb-3">
-    <Users className={`w-5 h-5 mr-2 ${idrsRisk.textColor}`} />
-    <h3 className="font-bold text-lg text-gray-800">IDRS Score</h3>
-  </div>
+          >
+            <div className="flex items-center mb-3">
+              <Users className={`w-5 h-5 mr-2 ${idrsRisk.textColor}`} />
+              <h3 className="font-bold text-lg text-gray-800">IDRS Score</h3>
+            </div>
 
-  {loading ? (
-    <div className="text-center py-4">
-      <div
-        className={`
+            {loading ? (
+              <div className="text-center py-4">
+                <div
+                  className={`
           animate-spin rounded-full h-8 w-8 border-b-2 mx-auto
           ${idrsRisk.textColor}
         `}
-        style={{ borderColor: "currentColor" }}
-      ></div>
-    </div>
-  ) : (
-    <>
-      {/* SCORE VALUE */}
-      <div className={`text-4xl font-bold mb-1 ${idrsRisk.textColor}`}>
-        {idrsScore} / 100
-      </div>
+                  style={{ borderColor: "currentColor" }}
+                ></div>
+              </div>
+            ) : (
+              <>
+                {/* SCORE VALUE */}
+                <div
+                  className={`text-4xl font-bold mb-1 ${idrsRisk.textColor}`}
+                >
+                  {idrsScore} / 100
+                </div>
 
-      {/* RISK LABEL */}
-      <p className={`text-lg font-semibold ${idrsRisk.textColor}`}>
-        {idrsRisk.icon} {idrsRisk.level}
-      </p>
+                {/* RISK LABEL */}
+                <p className={`text-lg font-semibold ${idrsRisk.textColor}`}>
+                  {idrsRisk.icon} {idrsRisk.level}
+                </p>
 
-      {/* SHORT MEANING */}
-      <p className="text-sm font-semibold text-gray-700 mt-2">
-        {idrsScore < 30
-          ? "* Indicates low chance of diabetes. Maintain healthy habits."
-          : idrsScore < 50
-          ? "* Moderate risk. Lifestyle changes strongly recommended."
-          : idrsScore < 70
-          ? "* High chance of insulin resistance. Requires screening."
-          : "* Very high probability of diabetes. Medical evaluation advised."}
-      </p>
+                {/* SHORT MEANING */}
+                <p className="text-sm font-semibold text-gray-700 mt-2">
+                  {idrsScore < 30
+                    ? "* Indicates low chance of diabetes. Maintain healthy habits."
+                    : idrsScore < 50
+                      ? "* Moderate risk. Lifestyle changes strongly recommended."
+                      : idrsScore < 70
+                        ? "* High chance of insulin resistance. Requires screening."
+                        : "* Very high probability of diabetes. Medical evaluation advised."}
+                </p>
 
-      {/* AWARENESS LINE */}
-      <p
-        className={`
+                {/* AWARENESS LINE */}
+                <p
+                  className={`
           text-xs mt-2 font-semibold
-          ${
-            idrsScore < 30
-              ? "text-green-700"
-              : idrsScore < 50
-              ? "text-yellow-700"
-              : idrsScore < 70
-              ? "text-orange-700"
-              : "text-red-700"
-          }
+          ${idrsScore < 30
+                      ? "text-green-700"
+                      : idrsScore < 50
+                        ? "text-yellow-700"
+                        : idrsScore < 70
+                          ? "text-orange-700"
+                          : "text-red-700"
+                    }
         `}
-      >
-        {idrsScore < 30
-          ? "✔ Regular exercise, balanced diet, and weight control keep you safe."
-          : idrsScore < 50
-          ? "⚠ You are in the caution zone. Manage waist size & stay active."
-          : idrsScore < 70
-          ? "❗ High risk: Overweight, inactivity, or family history may be contributing."
-          : "🚨 Very high risk: Strongly recommended to check HbA1c or fasting glucose."}
-      </p>
-    </>
-  )}
-</div>
+                >
+                  {idrsScore < 30
+                    ? "✔ Regular exercise, balanced diet, and weight control keep you safe."
+                    : idrsScore < 50
+                      ? "⚠ You are in the caution zone. Manage waist size & stay active."
+                      : idrsScore < 70
+                        ? "❗ High risk: Overweight, inactivity, or family history may be contributing."
+                        : "🚨 Very high risk: Strongly recommended to check HbA1c or fasting glucose."}
+                </p>
+              </>
+            )}
+          </div>
 
+          {/* 1. BMI */}
+          <div
+            className={`
+    rounded-xl shadow-lg p-5 border-t-4
+    ${bmi < 18
+                ? "border-blue-500 bg-blue-50"
+                : bmi < 23
+                  ? "border-green-500 bg-green-50"
+                  : bmi < 25
+                    ? "border-yellow-500 bg-yellow-50"
+                    : "border-red-500 bg-red-50"
+              }
+`}
+          >
+            <div className="flex items-center mb-2">
+              <Scale
+                className={`w-5 h-5 mr-2 ${bmi < 18
+                    ? "text-blue-600"
+                    : bmi < 23
+                      ? "text-green-600"
+                      : bmi < 25
+                        ? "text-yellow-600"
+                        : "text-red-600"
+                  }`}
+              />
+              <h3 className="font-bold text-gray-800 text-lg">BMI</h3>
+            </div>
+
+            {/* BMI Value */}
+            <div
+              className={`text-4xl font-bold mb-1 ${bmi < 18
+                  ? "text-blue-600"
+                  : bmi < 23
+                    ? "text-green-600"
+                    : bmi < 25
+                      ? "text-yellow-600"
+                      : "text-red-600"
+                }`}
+            >
+              {bmi.toFixed(1)} Kg/m<sup>2</sup>
+            </div>
+
+            {/* BMI Category */}
+            <p
+              className={`text-lg font-semibold ${bmi < 18
+                  ? "text-blue-600"
+                  : bmi < 23
+                    ? "text-green-600"
+                    : bmi < 25
+                      ? "text-yellow-600"
+                      : "text-red-600"
+                }`}
+            >
+              {bmi < 18
+                ? "🔵 Underweight"
+                : bmi < 23
+                  ? "🟢 Normal"
+                  : bmi < 25
+                    ? "🟡 Overweight"
+                    : "🔴 Obesity"}
+            </p>
+
+            {/* Awareness Message (Doctor Recommended) */}
+            <p
+              className={`mt-2 text-sm font-semibold ${bmi < 18
+                  ? "text-blue-700"
+                  : bmi < 23
+                    ? "text-green-700"
+                    : bmi < 25
+                      ? "text-yellow-700"
+                      : "text-red-700"
+                }`}
+            >
+              {bmi < 18
+                ? "* Low BMI may indicate nutritional deficiencies or chronic fatigue risk. Increase calorie intake with protein-rich foods."
+                : bmi < 23
+                  ? "* Healthy BMI. Maintain balanced diet and regular physical activity to prevent future weight gain."
+                  : bmi < 25
+                    ? "* Slightly high BMI. Early lifestyle correction is recommended to prevent diabetes and high BP."
+                    : "* High BMI significantly increases risk of diabetes, hypertension, fatty liver & joint problems. Consult a doctor for a weight-loss plan."}
+            </p>
+          </div>
+
+          {/* BLOOD PRESSURE CARD */}
+          <div
+            className={`
+    rounded-xl shadow-lg p-5 border-t-4
+    ${data.formData.systolic < 120 && data.formData.diastolic < 80
+                ? "border-green-500 bg-green-50"
+                : data.formData.systolic < 140
+                  ? "border-yellow-500 bg-yellow-50"
+                  : "border-red-500 bg-red-50"
+              }
+  `}
+          >
+            <div className="flex items-center mb-2">
+              <Pill
+                className={`w-5 h-5 mr-2 ${data.formData.systolic < 120 && data.formData.diastolic < 80
+                    ? "text-green-600"
+                    : data.formData.systolic < 140
+                      ? "text-yellow-600"
+                      : "text-red-600"
+                  }`}
+              />
+              <h3 className="font-bold text-lg text-gray-800">
+                Blood Pressure
+              </h3>
+            </div>
+
+            {/* BP VALUE (Color Coded) */}
+            <div
+              className={`
+      text-4xl font-bold mb-1
+      ${data.formData.systolic < 120 && data.formData.diastolic < 80
+                  ? "text-green-600"
+                  : data.formData.systolic < 140
+                    ? "text-yellow-600"
+                    : "text-red-600"
+                }
+    `}
+            >
+              {data.formData.systolic}/{data.formData.diastolic} mmHg
+            </div>
+
+            {/* CONDITION LABEL */}
+            <p
+              className={`
+      text-lg font-bold mb-1
+      ${data.formData.systolic < 120 && data.formData.diastolic < 80
+                  ? "text-green-600"
+                  : data.formData.systolic < 140
+                    ? "text-yellow-600"
+                    : "text-red-600"
+                }
+    `}
+            >
+              {data.formData.systolic < 120 && data.formData.diastolic < 80
+                ? "🟢 Normal Blood Pressure"
+                : data.formData.systolic < 140
+                  ? "🟡 Pre-Hypertension"
+                  : "🔴 High Blood Pressure (Hypertension)"}
+            </p>
+
+            {/* SHORT AWARENESS MESSAGE */}
+            <p className="text-sm font-semibold text-gray-700 mt-1">
+              {data.formData.systolic < 120 && data.formData.diastolic < 80
+                ? "* Your BP is within healthy range. Keep maintaining a balanced diet, exercise, and stress control."
+                : data.formData.systolic < 140
+                  ? "* This is an early warning stage. Indicates increasing heart and artery pressure. Lifestyle correction recommended."
+                  : "* BP is high. This increases risk of heart disease, stroke, and kidney damage. Medical evaluation is advised."}
+            </p>
+
+            {/* EXTRA PATIENT AWARENESS LINE */}
+            <p
+              className={`
+      text-xs mt-2 font-semibold
+      ${data.formData.systolic < 120 && data.formData.diastolic < 80
+                  ? "text-green-700"
+                  : data.formData.systolic < 140
+                    ? "text-yellow-700"
+                    : "text-red-700"
+                }
+    `}
+            >
+              {data.formData.systolic < 120 && data.formData.diastolic < 80
+                ? "✔ Good BP helps protect your heart, kidneys, and eyes."
+                : data.formData.systolic < 140
+                  ? "⚠ Pre-hypertension can progress to hypertension if ignored."
+                  : "❗ Uncontrolled BP can lead to heart attack or stroke."}
+            </p>
+          </div>
+
+          {/* PULSE RATE CARD */}
+          <div
+            className={`
+    rounded-xl shadow-lg p-5 border-t-4
+    ${data.formData.pulse >= 60 && data.formData.pulse <= 100
+                ? "border-green-500 bg-green-50"
+                : data.formData.pulse < 60
+                  ? "border-yellow-500 bg-yellow-50"
+                  : "border-red-500 bg-red-50"
+              }
+  `}
+          >
+            <div className="flex items-center mb-3">
+              <Activity
+                className={`w-5 h-5 mr-2 ${data.formData.pulse >= 60 && data.formData.pulse <= 100
+                    ? "text-green-600"
+                    : data.formData.pulse < 60
+                      ? "text-yellow-600"
+                      : "text-red-600"
+                  }`}
+              />
+              <h3 className="font-bold text-lg text-gray-800">Pulse Rate</h3>
+            </div>
+
+            {/* PULSE VALUE */}
+            <div
+              className={`
+      text-4xl font-bold mb-1
+      ${data.formData.pulse >= 60 && data.formData.pulse <= 100
+                  ? "text-green-600"
+                  : data.formData.pulse < 60
+                    ? "text-yellow-600"
+                    : "text-red-600"
+                }
+    `}
+            >
+              {data.formData.pulse} BPM
+            </div>
+
+            {/* CONDITION */}
+            <p
+              className={`
+      text-lg font-bold mb-1
+      ${data.formData.pulse >= 60 && data.formData.pulse <= 100
+                  ? "text-green-600"
+                  : data.formData.pulse < 60
+                    ? "text-yellow-600"
+                    : "text-red-600"
+                }
+    `}
+            >
+              {data.formData.pulse >= 60 && data.formData.pulse <= 100
+                ? "🟢 Normal Pulse"
+                : data.formData.pulse < 60
+                  ? "🟡 Low Pulse (Bradycardia)"
+                  : "🔴 High Pulse (Tachycardia)"}
+            </p>
+
+            {/* AWARENESS MESSAGE */}
+            <p className="text-sm font-semibold text-gray-700">
+              {data.formData.pulse >= 60 && data.formData.pulse <= 100
+                ? "* Indicates a healthy heart rhythm and stable circulation."
+                : data.formData.pulse < 60
+                  ? "* Low pulse may be normal for athletes but can indicate thyroid or heart rhythm issues if symptomatic."
+                  : "* High pulse may be due to stress, dehydration, fever or heart rhythm issues. Monitor regularly."}
+            </p>
+
+            {/* EXTRA AWARENESS LINE */}
+            <p
+              className={`
+      text-xs mt-2 font-semibold
+      ${data.formData.pulse >= 60 && data.formData.pulse <= 100
+                  ? "text-green-700"
+                  : data.formData.pulse < 60
+                    ? "text-yellow-700"
+                    : "text-red-700"
+                }
+    `}
+            >
+              {data.formData.pulse >= 60 && data.formData.pulse <= 100
+                ? "✔ Good pulse supports healthy oxygen & blood circulation."
+                : data.formData.pulse < 60
+                  ? "⚠ Consult a doctor if low pulse is accompanied by dizziness or fatigue."
+                  : "❗ Persistent high pulse needs medical attention."}
+            </p>
+          </div>
         </div>
 
         {/* Action Buttons */}
@@ -625,8 +641,7 @@ function YesNoToggle({
       tabIndex={0}
       onClick={() => onChange(value === "yes" ? "no" : "yes")}
       className={`w-20 text-center py-2 rounded font-semibold border outline-none focus:border-4 focus:border-black
-        ${
-          value === "yes" ? "bg-green-600 text-white" : "bg-red-600 text-white"
+        ${value === "yes" ? "bg-green-600 text-white" : "bg-red-600 text-white"
         }`}
     >
       {value === "yes" ? "YES" : "NO"}
@@ -733,7 +748,6 @@ export default function DiabetesRiskCalculator() {
     setSystolic("");
     setDiastolic("");
     setPulse("");
-
   };
 
   const handleCalculate = async () => {
@@ -795,7 +809,7 @@ export default function DiabetesRiskCalculator() {
       high_blood_sugar_history: highBloodSugar === "yes",
       family_history: familyHistory,
       fbs: parseFloat(fbs) || 0,
-   
+
       systolic: parseFloat(systolic) || 0,
       diastolic: parseFloat(diastolic) || 0,
       pulse: parseFloat(pulse) || 0,
@@ -1009,22 +1023,20 @@ export default function DiabetesRiskCalculator() {
           <div className="flex gap-3 ">
             <button
               onClick={() => setGender("male")}
-              className={`px-4 py-2 rounded border focus:outline-none focus:ring-2 focus:ring-black ${
-                gender === "male"
+              className={`px-4 py-2 rounded border focus:outline-none focus:ring-2 focus:ring-black ${gender === "male"
                   ? "bg-blue-500 text-white"
                   : "bg-gray-100 text-gray-700"
-              }`}
+                }`}
             >
               Male
             </button>
 
             <button
               onClick={() => setGender("female")}
-              className={`px-4 py-2 rounded border focus:outline-none focus:ring-2 focus:ring-black ${
-                gender === "female"
+              className={`px-4 py-2 rounded border focus:outline-none focus:ring-2 focus:ring-black ${gender === "female"
                   ? "bg-pink-500 text-white"
                   : "bg-gray-100 text-gray-700"
-              }`}
+                }`}
             >
               Female
             </button>
@@ -1038,20 +1050,18 @@ export default function DiabetesRiskCalculator() {
             <div className="flex gap-2">
               <button
                 onClick={() => setHeightUnit("cm")}
-                className={`px-3 py-1 rounded border text-sm focus:outline-none focus:ring-2 focus:ring-black ${
-                  heightUnit === "cm" ? "bg-blue-500 text-white" : "bg-gray-100"
-                }`}
+                className={`px-3 py-1 rounded border text-sm focus:outline-none focus:ring-2 focus:ring-black ${heightUnit === "cm" ? "bg-blue-500 text-white" : "bg-gray-100"
+                  }`}
               >
                 cm
               </button>
 
               <button
                 onClick={() => setHeightUnit("feet")}
-                className={`px-3 py-1 rounded border text-sm focus:outline-none focus:ring-2 focus:ring-black ${
-                  heightUnit === "feet"
+                className={`px-3 py-1 rounded border text-sm focus:outline-none focus:ring-2 focus:ring-black ${heightUnit === "feet"
                     ? "bg-blue-500 text-white"
                     : "bg-gray-100"
-                }`}
+                  }`}
               >
                 ft/in
               </button>
@@ -1113,23 +1123,19 @@ export default function DiabetesRiskCalculator() {
           <div className="flex flex-col gap-2">
             {/* Unit Switch */}
             <div className="flex gap-2">
-    
-
               <button
                 onClick={() => setWaistUnit("inch")}
-                className={`px-3 py-1 rounded border text-sm focus:outline-none focus:ring-2 focus:ring-black ${
-                  waistUnit === "inch"
+                className={`px-3 py-1 rounded border text-sm focus:outline-none focus:ring-2 focus:ring-black ${waistUnit === "inch"
                     ? "bg-blue-500 text-white"
                     : "bg-gray-100"
-                }`}
+                  }`}
               >
                 inch
               </button>
               <button
                 onClick={() => setWaistUnit("cm")}
-                className={`px-3 py-1 rounded border text-sm focus:outline-none focus:ring-2 focus:ring-black ${
-                  waistUnit === "cm" ? "bg-blue-500 text-white" : "bg-gray-100"
-                }`}
+                className={`px-3 py-1 rounded border text-sm focus:outline-none focus:ring-2 focus:ring-black ${waistUnit === "cm" ? "bg-blue-500 text-white" : "bg-gray-100"
+                  }`}
               >
                 cm
               </button>
@@ -1244,10 +1250,23 @@ export default function DiabetesRiskCalculator() {
         </FormRow>
 
         {/* BUTTON */}
-        <div className="text-center mt-6 ">
+        <div className="text-center mt-6">
           <button
             onClick={handleCalculate}
-            className="px-6 py-3 bg-blue-600 text-white font-bold rounded-lg shadow cursor-pointer"
+            className="
+      px-6 py-3 
+      bg-blue-600 
+      text-white 
+      font-bold 
+      rounded-lg 
+      shadow 
+      cursor-pointer
+      transition-all duration-300 
+      hover:bg-blue-700 
+      hover:shadow-xl 
+      hover:-translate-y-1 
+      active:scale-95
+    "
           >
             Calculate Risk
           </button>

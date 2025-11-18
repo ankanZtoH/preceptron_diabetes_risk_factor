@@ -35,6 +35,7 @@ def save_record(request):
 
             physical_activity = data.get("physical_activity"),
             family_history = data.get("family_history"),
+            
             systolic = data.get("systolic"),
 
             diastolic = data.get("diastolic"),
