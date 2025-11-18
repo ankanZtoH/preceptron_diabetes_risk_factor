@@ -20,9 +20,6 @@ class DiabetesRecord(models.Model):
         choices=[("male", "Male"), ("female", "Female")]
     )
 
-    # 4. Physical activity ≥30 min/day
-    physical_activity = models.BooleanField()  # True = Yes, False = No
-
     # 5. Daily fruit/vegetable intake
     daily_fruit_veg = models.BooleanField()    # True = Yes, False = No
 
@@ -32,6 +29,18 @@ class DiabetesRecord(models.Model):
     # 7. History of high blood sugar
     high_blood_sugar_history = models.BooleanField()  # True = Yes, False = No
 
+    physical_activity = models.CharField(
+
+        max_length=10,
+        choices=[
+            ("vigorous","Vigorous exercise / strenuous work"),
+            ("moderate","Moderate exercise at work/home"),
+            ("mild","Mild exercise at work/home"),
+            ("sedentary","No exercise / sedentary lifestyle")
+        ],
+        blank=True,
+        null=True,
+    )
     # 8. Family history
     family_history = models.CharField(
         max_length=10,
@@ -44,7 +53,18 @@ class DiabetesRecord(models.Model):
         null=True,
     )
 
+
+    # for blood presure
+    systolic = models.FloatField(null=True,blank=True)
+
+    diastolic = models.FloatField(null=True,blank=True)
+
+    # for pulse rate
+
+    pulse = models.FloatField(null=True,blank=True)
+
     # 9. ADA Fasting Blood Sugar (mg/dL)
+
     fbs = models.FloatField()   # numeric fasting blood sugar
 
     # Final computed score and risk category sent from frontend

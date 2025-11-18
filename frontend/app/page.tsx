@@ -23,7 +23,7 @@ function ResultsPage({
   onRecalculate: () => void;
 }) {
   const [idrsScore, setIdrsScore] = useState(0);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     calculateIDRS();
@@ -55,11 +55,10 @@ function ResultsPage({
       else if (waist >= 90) score += 20;
     }
 
-    if (formData.physicalActivity === "yes") {
-      score += 0;
-    } else {
-      score += 30;
-    }
+    if (formData.physicalActivity === "vigorous") score += 0;
+    else if (formData.physical_activity === "moderate") score += 10;
+    else if (formData.physical_activity === "mild") score += 20;
+    else if (formData.physical_activity === "sedentary") score += 30;
 
     if (formData.familyHistory === "zero") score += 0;
     else if (formData.familyHistory === "second") score += 10;
@@ -128,7 +127,7 @@ function ResultsPage({
         </div>
 
         {/* 4 Key Metrics Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
           {/* 1. BMI */}
           {/* 1. BMI */}
           <div
@@ -267,7 +266,6 @@ function ResultsPage({
             </p>
           </div>
 
-          {/* 3. Risk Factor */}
           {/* 3. Risk Factor with points + category */}
           <div
             className={`
@@ -282,15 +280,14 @@ function ResultsPage({
                   data.risk?.textColor || "text-gray-600"
                 }`}
               />
-              <h3 className="font-bold text-gray-800 text-lg">Risk Level</h3>
+              <h3 className="font-bold text-gray-800 text-lg">FINDRISK</h3>
             </div>
-
 
             <p className=" text-4xl font-semibold  mb-1 flex">
               <span className={`${data.risk?.textColor || "text-gray-600"}`}>
-                {data.totalScore}
+                {data.totalScore} / 34
               </span>
-              <p className="text-sm flex pt-4 pl-1 text-red-600"> points</p>
+              
             </p>
 
             <div
@@ -301,53 +298,272 @@ function ResultsPage({
               {data.risk?.icon || "⚪"} {data.risk?.level}
             </div>
 
-           
-
             <p className="text-sm font-bold text-gray-600 ml-2">
               <span className={`${data.risk?.textColor || "text-gray-600"}`}>
-              * {data.risk?.message || "N/A"}
+                * {data.risk?.message || "N/A"}
               </span>
             </p>
           </div>
 
-          {/* 4. IDRS Score */}
-          <div
-            className={`
+
+{/* BLOOD PRESSURE CARD */}
+<div
+  className={`
+    rounded-xl shadow-lg p-5 border-t-4
+    ${
+      data.formData.systolic < 120 && data.formData.diastolic < 80
+        ? "border-green-500 bg-green-50"
+        : data.formData.systolic < 140
+        ? "border-yellow-500 bg-yellow-50"
+        : "border-red-500 bg-red-50"
+    }
+  `}
+>
+  <div className="flex items-center mb-2">
+    <Pill
+      className={`w-5 h-5 mr-2 ${
+        data.formData.systolic < 120 && data.formData.diastolic < 80
+          ? "text-green-600"
+          : data.formData.systolic < 140
+          ? "text-yellow-600"
+          : "text-red-600"
+      }`}
+    />
+    <h3 className="font-bold text-lg text-gray-800">Blood Pressure</h3>
+  </div>
+
+  {/* BP VALUE (Color Coded) */}
+  <div
+    className={`
+      text-4xl font-bold mb-1
+      ${
+        data.formData.systolic < 120 && data.formData.diastolic < 80
+          ? "text-green-600"
+          : data.formData.systolic < 140
+          ? "text-yellow-600"
+          : "text-red-600"
+      }
+    `}
+  >
+    {data.formData.systolic}/{data.formData.diastolic} mmHg
+  </div>
+
+  {/* CONDITION LABEL */}
+  <p
+    className={`
+      text-lg font-bold mb-1
+      ${
+        data.formData.systolic < 120 && data.formData.diastolic < 80
+          ? "text-green-600"
+          : data.formData.systolic < 140
+          ? "text-yellow-600"
+          : "text-red-600"
+      }
+    `}
+  >
+    {data.formData.systolic < 120 && data.formData.diastolic < 80
+      ? "🟢 Normal Blood Pressure"
+      : data.formData.systolic < 140
+      ? "🟡 Pre-Hypertension"
+      : "🔴 High Blood Pressure (Hypertension)"}
+  </p>
+
+  {/* SHORT AWARENESS MESSAGE */}
+  <p className="text-sm font-semibold text-gray-700 mt-1">
+    {data.formData.systolic < 120 && data.formData.diastolic < 80
+      ? "* Your BP is within healthy range. Keep maintaining a balanced diet, exercise, and stress control."
+      : data.formData.systolic < 140
+      ? "* This is an early warning stage. Indicates increasing heart and artery pressure. Lifestyle correction recommended."
+      : "* BP is high. This increases risk of heart disease, stroke, and kidney damage. Medical evaluation is advised."}
+  </p>
+
+  {/* EXTRA PATIENT AWARENESS LINE */}
+  <p
+    className={`
+      text-xs mt-2 font-semibold
+      ${
+        data.formData.systolic < 120 && data.formData.diastolic < 80
+          ? "text-green-700"
+          : data.formData.systolic < 140
+          ? "text-yellow-700"
+          : "text-red-700"
+      }
+    `}
+  >
+    {data.formData.systolic < 120 && data.formData.diastolic < 80
+      ? "✔ Good BP helps protect your heart, kidneys, and eyes."
+      : data.formData.systolic < 140
+      ? "⚠ Pre-hypertension can progress to hypertension if ignored."
+      : "❗ Uncontrolled BP can lead to heart attack or stroke."}
+  </p>
+</div>
+
+
+{/* PULSE RATE CARD */}
+<div
+  className={`
+    rounded-xl shadow-lg p-5 border-t-4
+    ${
+      data.formData.pulse >= 60 && data.formData.pulse <= 100
+        ? "border-green-500 bg-green-50"
+        : data.formData.pulse < 60
+        ? "border-yellow-500 bg-yellow-50"
+        : "border-red-500 bg-red-50"
+    }
+  `}
+>
+  <div className="flex items-center mb-3">
+    <Activity
+      className={`w-5 h-5 mr-2 ${
+        data.formData.pulse >= 60 && data.formData.pulse <= 100
+          ? "text-green-600"
+          : data.formData.pulse < 60
+          ? "text-yellow-600"
+          : "text-red-600"
+      }`}
+    />
+    <h3 className="font-bold text-lg text-gray-800">Pulse Rate</h3>
+  </div>
+
+  {/* PULSE VALUE */}
+  <div
+    className={`
+      text-4xl font-bold mb-1
+      ${
+        data.formData.pulse >= 60 && data.formData.pulse <= 100
+          ? "text-green-600"
+          : data.formData.pulse < 60
+          ? "text-yellow-600"
+          : "text-red-600"
+      }
+    `}
+  >
+    {data.formData.pulse} BPM
+  </div>
+
+  {/* CONDITION */}
+  <p
+    className={`
+      text-lg font-bold mb-1
+      ${
+        data.formData.pulse >= 60 && data.formData.pulse <= 100
+          ? "text-green-600"
+          : data.formData.pulse < 60
+          ? "text-yellow-600"
+          : "text-red-600"
+      }
+    `}
+  >
+    {data.formData.pulse >= 60 && data.formData.pulse <= 100
+      ? "🟢 Normal Pulse"
+      : data.formData.pulse < 60
+      ? "🟡 Low Pulse (Bradycardia)"
+      : "🔴 High Pulse (Tachycardia)"}
+  </p>
+
+  {/* AWARENESS MESSAGE */}
+  <p className="text-sm font-semibold text-gray-700">
+    {data.formData.pulse >= 60 && data.formData.pulse <= 100
+      ? "* Indicates a healthy heart rhythm and stable circulation."
+      : data.formData.pulse < 60
+      ? "* Low pulse may be normal for athletes but can indicate thyroid or heart rhythm issues if symptomatic."
+      : "* High pulse may be due to stress, dehydration, fever or heart rhythm issues. Monitor regularly."}
+  </p>
+
+  {/* EXTRA AWARENESS LINE */}
+  <p
+    className={`
+      text-xs mt-2 font-semibold
+      ${
+        data.formData.pulse >= 60 && data.formData.pulse <= 100
+          ? "text-green-700"
+          : data.formData.pulse < 60
+          ? "text-yellow-700"
+          : "text-red-700"
+      }
+    `}
+  >
+    {data.formData.pulse >= 60 && data.formData.pulse <= 100
+      ? "✔ Good pulse supports healthy oxygen & blood circulation."
+      : data.formData.pulse < 60
+      ? "⚠ Consult a doctor if low pulse is accompanied by dizziness or fatigue."
+      : "❗ Persistent high pulse needs medical attention."}
+  </p>
+</div>
+
+         {/* IDRS SCORE CARD */}
+<div
+  className={`
     rounded-xl shadow-lg p-5 border-t-4
     ${(idrsRisk.color || "bg-gray-500").replace("bg-", "border-")}
     ${idrsRisk.bgColor || "bg-gray-50"}
   `}
-          >
-            <div className="flex items-center mb-3">
-              <Users className={`w-5 h-5 mr-2 ${idrsRisk.textColor}`} />
-              <h3 className="font-bold text-lg text-gray-800">IDRS</h3>
-            </div>
+>
+  <div className="flex items-center mb-3">
+    <Users className={`w-5 h-5 mr-2 ${idrsRisk.textColor}`} />
+    <h3 className="font-bold text-lg text-gray-800">IDRS Score</h3>
+  </div>
 
-            {loading ? (
-              <div className="text-center py-4">
-                <div
-                  className={`
+  {loading ? (
+    <div className="text-center py-4">
+      <div
+        className={`
           animate-spin rounded-full h-8 w-8 border-b-2 mx-auto
           ${idrsRisk.textColor}
         `}
-                  style={{ borderColor: "currentColor" }}
-                ></div>
-              </div>
-            ) : (
-              <>
-                <div
-                  className={`text-4xl font-bold mb-1 flex ${idrsRisk.textColor}`}
-                >
-                  {idrsScore}
-                  <p className="text-sm flex pt-4 pl-1"> points</p>
-                </div>
+        style={{ borderColor: "currentColor" }}
+      ></div>
+    </div>
+  ) : (
+    <>
+      {/* SCORE VALUE */}
+      <div className={`text-4xl font-bold mb-1 ${idrsRisk.textColor}`}>
+        {idrsScore} / 100
+      </div>
 
-                <p className={`text-lg font-semibold ${idrsRisk.textColor}`}>
-                  {idrsRisk.icon} {idrsRisk.level}
-                </p>
-              </>
-            )}
-          </div>
+      {/* RISK LABEL */}
+      <p className={`text-lg font-semibold ${idrsRisk.textColor}`}>
+        {idrsRisk.icon} {idrsRisk.level}
+      </p>
+
+      {/* SHORT MEANING */}
+      <p className="text-sm font-semibold text-gray-700 mt-2">
+        {idrsScore < 30
+          ? "* Indicates low chance of diabetes. Maintain healthy habits."
+          : idrsScore < 50
+          ? "* Moderate risk. Lifestyle changes strongly recommended."
+          : idrsScore < 70
+          ? "* High chance of insulin resistance. Requires screening."
+          : "* Very high probability of diabetes. Medical evaluation advised."}
+      </p>
+
+      {/* AWARENESS LINE */}
+      <p
+        className={`
+          text-xs mt-2 font-semibold
+          ${
+            idrsScore < 30
+              ? "text-green-700"
+              : idrsScore < 50
+              ? "text-yellow-700"
+              : idrsScore < 70
+              ? "text-orange-700"
+              : "text-red-700"
+          }
+        `}
+      >
+        {idrsScore < 30
+          ? "✔ Regular exercise, balanced diet, and weight control keep you safe."
+          : idrsScore < 50
+          ? "⚠ You are in the caution zone. Manage waist size & stay active."
+          : idrsScore < 70
+          ? "❗ High risk: Overweight, inactivity, or family history may be contributing."
+          : "🚨 Very high risk: Strongly recommended to check HbA1c or fasting glucose."}
+      </p>
+    </>
+  )}
+</div>
+
         </div>
 
         {/* Action Buttons */}
@@ -428,10 +644,10 @@ export default function DiabetesRiskCalculator() {
   const [heightInches, setHeightInches] = useState("");
   const [weight, setWeight] = useState("");
   const [gender, setGender] = useState("male");
-  const [waistUnit, setWaistUnit] = useState("cm");
+  const [waistUnit, setWaistUnit] = useState("inch");
   const [waistCm, setWaistCm] = useState("");
   const [waistInch, setWaistInch] = useState("");
-  const [physicalActivity, setPhysicalActivity] = useState("yes");
+  const [physicalActivity, setPhysicalActivity] = useState("none");
   const [fruitVeg, setFruitVeg] = useState("no");
   const [bpMedication, setBpMedication] = useState("no");
   const [highBloodSugar, setHighBloodSugar] = useState("no");
@@ -440,6 +656,9 @@ export default function DiabetesRiskCalculator() {
   const [showResults, setShowResults] = useState(false);
   const [validationErrors, setValidationErrors] = useState<string[]>([]);
   const [showErrorModal, setShowErrorModal] = useState(false);
+  const [systolic, setSystolic] = useState("");
+  const [diastolic, setDiastolic] = useState("");
+  const [pulse, setPulse] = useState("");
 
   const validateForm = () => {
     const errors = [];
@@ -485,6 +704,10 @@ export default function DiabetesRiskCalculator() {
       errors.push("Fasting Blood Sugar is required");
     else if (parseFloat(fbs) < 0) errors.push("FBS cannot be negative");
 
+    if (!systolic) errors.push("Systolic BP is required");
+    if (!diastolic) errors.push("Diastolic BP is required");
+    if (!pulse) errors.push("Pulse Rate is required");
+
     return errors;
   };
 
@@ -500,13 +723,17 @@ export default function DiabetesRiskCalculator() {
     setFbs("");
     setBmiInput("calculate");
     setHeightUnit("cm");
-    setWaistUnit("cm");
+    setWaistUnit("inch");
     setGender("male");
-    setPhysicalActivity("yes");
+    setPhysicalActivity("none");
     setFruitVeg("yes");
     setBpMedication("no");
     setHighBloodSugar("no");
     setFamilyHistory("none");
+    setSystolic("");
+    setDiastolic("");
+    setPulse("");
+
   };
 
   const handleCalculate = async () => {
@@ -543,6 +770,9 @@ export default function DiabetesRiskCalculator() {
         physicalActivity: physicalActivity,
         familyHistory: familyHistory,
         fbs: parseFloat(fbs) || 0,
+        systolic: parseFloat(systolic) || 0,
+        diastolic: parseFloat(diastolic) || 0,
+        pulse: parseFloat(pulse) || 0,
       },
     };
 
@@ -559,12 +789,16 @@ export default function DiabetesRiskCalculator() {
       bmi: bmiValue,
       waist_cm: waistValue,
       sex_assigned_at_birth: gender,
-      physical_activity: physicalActivity === "yes",
+      physical_activity: physicalActivity,
       daily_fruit_veg: fruitVeg === "yes",
       bp_medication: bpMedication === "yes",
       high_blood_sugar_history: highBloodSugar === "yes",
       family_history: familyHistory,
       fbs: parseFloat(fbs) || 0,
+   
+      systolic: parseFloat(systolic) || 0,
+      diastolic: parseFloat(diastolic) || 0,
+      pulse: parseFloat(pulse) || 0,
       total_score: totalScore,
       risk_category: getRiskCategory().level,
     };
@@ -674,7 +908,14 @@ export default function DiabetesRiskCalculator() {
     }
   };
 
-  const getActivityScore = () => (physicalActivity === "no" ? 2 : 0);
+  const getActivityScore = () => {
+    if (physicalActivity == "vigorous") return 0;
+    if (physicalActivity == "moderate") return 0;
+    if (physicalActivity == "mild") return 1;
+    if (physicalActivity == "sedentary") return 2;
+    return 0;
+  };
+
   const getFruitVegScore = () => (fruitVeg === "no" ? 1 : 0);
   const getBPScore = () => (bpMedication === "yes" ? 2 : 0);
   const getHighSugarScore = () => (highBloodSugar === "yes" ? 5 : 0);
@@ -862,7 +1103,8 @@ export default function DiabetesRiskCalculator() {
           <input
             value={effectiveBMI ? effectiveBMI.toFixed(1) : ""}
             readOnly
-            className="w-full border rounded px-3 py-2 bg-gray-100"
+            className="w-full border rounded px-3 py-2 bg-gray-100 "
+            tabIndex={-1}
           />
         </FormRow>
 
@@ -871,14 +1113,7 @@ export default function DiabetesRiskCalculator() {
           <div className="flex flex-col gap-2">
             {/* Unit Switch */}
             <div className="flex gap-2">
-              <button
-                onClick={() => setWaistUnit("cm")}
-                className={`px-3 py-1 rounded border text-sm focus:outline-none focus:ring-2 focus:ring-black ${
-                  waistUnit === "cm" ? "bg-blue-500 text-white" : "bg-gray-100"
-                }`}
-              >
-                cm
-              </button>
+    
 
               <button
                 onClick={() => setWaistUnit("inch")}
@@ -889,6 +1124,14 @@ export default function DiabetesRiskCalculator() {
                 }`}
               >
                 inch
+              </button>
+              <button
+                onClick={() => setWaistUnit("cm")}
+                className={`px-3 py-1 rounded border text-sm focus:outline-none focus:ring-2 focus:ring-black ${
+                  waistUnit === "cm" ? "bg-blue-500 text-white" : "bg-gray-100"
+                }`}
+              >
+                cm
               </button>
             </div>
 
@@ -915,14 +1158,6 @@ export default function DiabetesRiskCalculator() {
           </div>
         </FormRow>
 
-        {/* ACTIVITY */}
-        <FormRow label="Daily Activity">
-          <YesNoToggle
-            value={physicalActivity}
-            onChange={setPhysicalActivity}
-          />
-        </FormRow>
-
         {/* FRUITS */}
         <FormRow label="Fruits / Vegetables">
           <YesNoToggle value={fruitVeg} onChange={setFruitVeg} />
@@ -938,6 +1173,20 @@ export default function DiabetesRiskCalculator() {
           <YesNoToggle value={highBloodSugar} onChange={setHighBloodSugar} />
         </FormRow>
 
+        {/* ACTIVITY */}
+        <FormRow label="Physical Activity" required>
+          <select
+            value={physicalActivity}
+            onChange={(e) => setPhysicalActivity(e.target.value)}
+            className="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black"
+          >
+            <option value="none">Select</option>
+            <option value="vigorous">Vigorous exercise / strenuous work</option>
+            <option value="moderate">Moderate exercise at work/home</option>
+            <option value="mild">Mild exercise at work/home</option>
+            <option value="sedentary">No exercise / sedentary lifestyle</option>
+          </select>
+        </FormRow>
         {/* FAMILY HISTORY */}
         <FormRow label="Family History" required>
           <select
@@ -952,6 +1201,37 @@ export default function DiabetesRiskCalculator() {
           </select>
         </FormRow>
 
+        {/* BLOOD PRESSURE */}
+        <FormRow label="Blood Pressure" required>
+          <div className="flex gap-2">
+            <input
+              type="number"
+              value={systolic}
+              onChange={(e) => setSystolic(e.target.value)}
+              className="w-1/2 border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black"
+              placeholder="Systolic (mmHg)"
+            />
+            <input
+              type="number"
+              value={diastolic}
+              onChange={(e) => setDiastolic(e.target.value)}
+              className="w-1/2 border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black"
+              placeholder="Diastolic (mmHg)"
+            />
+          </div>
+        </FormRow>
+
+        {/* PULSE RATE */}
+        <FormRow label="Pulse Rate" required>
+          <input
+            type="number"
+            value={pulse}
+            onChange={(e) => setPulse(e.target.value)}
+            className="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black"
+            placeholder="Beats per minute (BPM)"
+          />
+        </FormRow>
+
         {/* FBS */}
         <FormRow label="Fasting Blood Sugar" required>
           <input
@@ -964,7 +1244,7 @@ export default function DiabetesRiskCalculator() {
         </FormRow>
 
         {/* BUTTON */}
-        <div className="text-center mt-6">
+        <div className="text-center mt-6 ">
           <button
             onClick={handleCalculate}
             className="px-6 py-3 bg-blue-600 text-white font-bold rounded-lg shadow cursor-pointer"

@@ -14,7 +14,7 @@ class DiabetesRecordResource(resources.ModelResource):
             "id", "age", "height_cm", "weight_kg", "bmi",
             "waist_cm", "sex_assigned_at_birth", "physical_activity",
             "daily_fruit_veg", "bp_medication", "high_blood_sugar_history",
-            "family_history", "fbs", "total_score", "risk_category",
+            "family_history", "systolic","diastolic","pulse","fbs", "total_score", "risk_category",
             "created_at"
         )
 
