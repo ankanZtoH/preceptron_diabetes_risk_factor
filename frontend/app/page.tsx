@@ -898,7 +898,7 @@ function ResultsPage({
                       range: "≥ 25",
                       color: "bg-red-100 text-red-700",
                       min: 25,
-                      max: 999,
+                      max: 99999,
                     },
                   ].map((row, idx) => {
                     const active =
@@ -1015,7 +1015,7 @@ function ResultsPage({
                       range: "> 100 BPM",
                       color: "bg-red-100 text-red-700",
                       min: 101,
-                      max: 300,
+                      max: 30000,
                     },
                   ].map((row, idx) => {
                     const active =
