@@ -1,4 +1,4 @@
-"use client";
+ "use client";
 import React, { useState, useEffect } from "react";
 import {
   Heart,
@@ -1046,30 +1046,25 @@ function ResultsPage({
                   {[
                     {
                       label: "Normal",
-                      range: "< 100 mg/dL",
+                      range: "< 140 mg/dL",
                       color: "bg-green-100 text-green-700",
                       min: 0,
-                      max: 99,
+                      max: 140,
                     },
                     {
-                      label: "Mild Impaired",
-                      range: "100 – 109",
+                      label: "Prediabetes",
+                      range: "141 – 199",
                       color: "bg-yellow-100 text-yellow-700",
-                      min: 100,
-                      max: 109,
+                      min: 141,
+                      max: 199,
                     },
-                    {
-                      label: "High Impaired",
-                      range: "110 – 125",
-                      color: "bg-orange-100 text-orange-700",
-                      min: 110,
-                      max: 125,
-                    },
+                
                     {
                       label: "Diabetes Range",
-                      range: "≥ 126",
+                      range: "≥ 200",
                       color: "bg-red-100 text-red-700",
-                      min: 126,
+                      min: 200
+              ,
                       max: 999,
                     },
                   ].map((row, idx) => {
