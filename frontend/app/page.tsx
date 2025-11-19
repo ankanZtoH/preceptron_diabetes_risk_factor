@@ -1,4 +1,4 @@
- "use client";
+"use client";
 import React, { useState, useEffect } from "react";
 import {
   Heart,
@@ -151,7 +151,7 @@ function ResultsPage({
                     : "text-red-600"
                 }`}
               />
-              <h3 className="font-bold text-gray-800">ADA Score (FBS)</h3>
+              <h3 className="font-bold text-gray-800">ADA Score (RBS)</h3>
             </div>
 
             {/* Value */}
@@ -420,25 +420,37 @@ function ResultsPage({
           </div>
 
           {/* BLOOD PRESSURE CARD */}
+
           <div
             className={`
     rounded-xl shadow-lg p-5 border-t-4
     ${
-      data.formData.systolic < 120 && data.formData.diastolic < 80
-        ? "border-green-500 bg-green-50"
-        : data.formData.systolic < 140
-        ? "border-yellow-500 bg-yellow-50"
-        : "border-red-500 bg-red-50"
+      data.formData.systolic < 90 || data.formData.diastolic < 60
+        ? "border-blue-500 bg-blue-50" // LOW BP
+        : data.formData.systolic < 120 && data.formData.diastolic < 80
+        ? "border-green-500 bg-green-50" // NORMAL
+        : data.formData.systolic < 130 && data.formData.diastolic < 80
+        ? "border-yellow-500 bg-yellow-50" // ELEVATED
+        : data.formData.systolic < 140 || data.formData.diastolic < 90
+        ? "border-orange-500 bg-orange-50" // STAGE 1
+        : "border-red-500 bg-red-50" // STAGE 2
     }
   `}
           >
             <div className="flex items-center mb-2">
               <Pill
                 className={`w-5 h-5 mr-2 ${
-                  data.formData.systolic < 120 && data.formData.diastolic < 80
+                  data.formData.systolic < 90 || data.formData.diastolic < 60
+                    ? "text-blue-600"
+                    : data.formData.systolic < 120 &&
+                      data.formData.diastolic < 80
                     ? "text-green-600"
-                    : data.formData.systolic < 140
+                    : data.formData.systolic < 130 &&
+                      data.formData.diastolic < 80
                     ? "text-yellow-600"
+                    : data.formData.systolic < 140 ||
+                      data.formData.diastolic < 90
+                    ? "text-orange-600"
                     : "text-red-600"
                 }`}
               />
@@ -447,15 +459,19 @@ function ResultsPage({
               </h3>
             </div>
 
-            {/* BP VALUE (Color Coded) */}
+            {/* BP VALUE */}
             <div
               className={`
       text-4xl font-bold mb-1
       ${
-        data.formData.systolic < 120 && data.formData.diastolic < 80
+        data.formData.systolic < 90 || data.formData.diastolic < 60
+          ? "text-blue-600"
+          : data.formData.systolic < 120 && data.formData.diastolic < 80
           ? "text-green-600"
-          : data.formData.systolic < 140
+          : data.formData.systolic < 130 && data.formData.diastolic < 80
           ? "text-yellow-600"
+          : data.formData.systolic < 140 || data.formData.diastolic < 90
+          ? "text-orange-600"
           : "text-red-600"
       }
     `}
@@ -463,53 +479,45 @@ function ResultsPage({
               {data.formData.systolic}/{data.formData.diastolic} mmHg
             </div>
 
-            {/* CONDITION LABEL */}
+            {/* CATEGORY LABEL */}
             <p
               className={`
       text-lg font-bold mb-1
       ${
-        data.formData.systolic < 120 && data.formData.diastolic < 80
+        data.formData.systolic < 90 || data.formData.diastolic < 60
+          ? "text-blue-600"
+          : data.formData.systolic < 120 && data.formData.diastolic < 80
           ? "text-green-600"
-          : data.formData.systolic < 140
+          : data.formData.systolic < 130 && data.formData.diastolic < 80
           ? "text-yellow-600"
+          : data.formData.systolic < 140 || data.formData.diastolic < 90
+          ? "text-orange-600"
           : "text-red-600"
       }
     `}
             >
-              {data.formData.systolic < 120 && data.formData.diastolic < 80
+              {data.formData.systolic < 90 || data.formData.diastolic < 60
+                ? "🔵 Low Blood Pressure (Hypotension)"
+                : data.formData.systolic < 120 && data.formData.diastolic < 80
                 ? "🟢 Normal Blood Pressure"
-                : data.formData.systolic < 140
-                ? "🟡 Pre-Hypertension"
-                : "🔴 High Blood Pressure (Hypertension)"}
+                : data.formData.systolic < 130 && data.formData.diastolic < 80
+                ? "🟡 Elevated Blood Pressure"
+                : data.formData.systolic < 140 || data.formData.diastolic < 90
+                ? "🟠 High Blood Pressure (Stage 1)"
+                : "🔴 High Blood Pressure (Stage 2)"}
             </p>
 
-            {/* SHORT AWARENESS MESSAGE */}
+            {/* Awareness Text */}
             <p className="text-sm font-semibold text-gray-700 mt-1">
-              {data.formData.systolic < 120 && data.formData.diastolic < 80
-                ? "* Your BP is within healthy range. Keep maintaining a balanced diet, exercise, and stress control."
-                : data.formData.systolic < 140
-                ? "* This is an early warning stage. Indicates increasing heart and artery pressure. Lifestyle correction recommended."
-                : "* BP is high. This increases risk of heart disease, stroke, and kidney damage. Medical evaluation is advised."}
-            </p>
-
-            {/* EXTRA PATIENT AWARENESS LINE */}
-            <p
-              className={`
-      text-xs mt-2 font-semibold
-      ${
-        data.formData.systolic < 120 && data.formData.diastolic < 80
-          ? "text-green-700"
-          : data.formData.systolic < 140
-          ? "text-yellow-700"
-          : "text-red-700"
-      }
-    `}
-            >
-              {data.formData.systolic < 120 && data.formData.diastolic < 80
-                ? "✔ Good BP helps protect your heart, kidneys, and eyes."
-                : data.formData.systolic < 140
-                ? "⚠ Pre-hypertension can progress to hypertension if ignored."
-                : "❗ Uncontrolled BP can lead to heart attack or stroke."}
+              {data.formData.systolic < 90 || data.formData.diastolic < 60
+                ? "* Low BP may cause dizziness, fatigue. Stay hydrated and consult a doctor if symptoms persist."
+                : data.formData.systolic < 120 && data.formData.diastolic < 80
+                ? "* Your BP is in the healthy range. Maintain a good lifestyle!"
+                : data.formData.systolic < 130 && data.formData.diastolic < 80
+                ? "* Elevated BP is an early warning. Lifestyle correction is strongly recommended."
+                : data.formData.systolic < 140 || data.formData.diastolic < 90
+                ? "* Stage 1 Hypertension. Start active lifestyle changes and monitor BP regularly."
+                : "* Stage 2 Hypertension is serious. Medical evaluation is strongly advised."}
             </p>
           </div>
 
@@ -695,7 +703,7 @@ function ResultsPage({
                   {/* ADA FBS */}
                   <tr>
                     <td className="py-2 px-2 font-semibold text-blue-700">
-                      ADA Fasting Blood Sugar
+                      ADA Random Blood Sugar (RBS)
                     </td>
                     <td className="py-2 px-2 text-right font-bold text-blue-700">
                       {data.breakdown.fbs} pts
@@ -710,10 +718,10 @@ function ResultsPage({
                   <span className="mr-1">🔥</span> Risk Categories (Recommended)
                 </h4>
 
-                <div className="text-xs text-gray-700 space-y-1">
-                  <div className="flex justify-between">
+                <div className="text-xs text-gray-700 space-y-1 flex flex-col">
+                  <div className="flex gap-19">
                     <span>0–7</span>
-                    <span className="flex items-center gap-1">
+                    <span className="flex items-center gap-1 mr-7">
                       🟢 <strong>Low risk</strong>
                     </span>
                     <span>Lifestyle advice only</span>
@@ -727,9 +735,9 @@ function ResultsPage({
                     <span>Recommend screening within 1 year</span>
                   </div>
 
-                  <div className="flex justify-between">
+                  <div className="flex gap-15.5">
                     <span>15–20</span>
-                    <span className="flex items-center gap-1">
+                    <span className="flex items-center gap-1 mr-9">
                       🟠 <strong>High risk</strong>
                     </span>
                     <span>High probability of prediabetes</span>
@@ -737,10 +745,12 @@ function ResultsPage({
 
                   <div className="flex justify-between">
                     <span>21+</span>
-                    <span className="flex items-center gap-1">
+                    <span className="flex items-center gap-1 pl-2">
                       🔴 <strong>Very high risk</strong>
                     </span>
-                    <span>Strongly suggest diagnostic testing</span>
+                    <span className="mr-2">
+                      Strongly suggest diagnostic testing
+                    </span>
                   </div>
                 </div>
 
@@ -873,28 +883,28 @@ function ResultsPage({
                 <tbody>
                   {[
                     {
-                      label: "Underweight",
+                      label: "🔵 Underweight",
                       range: "< 18.5",
                       color: "bg-blue-100 text-blue-700",
-                      min: 0,
+                      min: -1000,
                       max: 18.4,
                     },
                     {
-                      label: "Normal",
+                      label: "🟢 Normal",
                       range: "18.5 – 22.9",
                       color: "bg-green-100 text-green-700",
                       min: 18.5,
                       max: 22.9,
                     },
                     {
-                      label: "Overweight",
+                      label: "🟠 Overweight",
                       range: "23 – 24.9",
                       color: "bg-yellow-100 text-yellow-700",
                       min: 23,
                       max: 24.9,
                     },
                     {
-                      label: "Obesity",
+                      label: "🔴 Obesity",
                       range: "≥ 25",
                       color: "bg-red-100 text-red-700",
                       min: 25,
@@ -930,49 +940,43 @@ function ResultsPage({
                 <tbody>
                   {[
                     {
-                      label: "Normal",
-                      range: "120/80",
+                      label: "🔵 Low Blood Pressure (Hypotension)",
+                      range: "< 90 OR < 60",
+                      color: "bg-blue-100 text-blue-700",
+                      check: (sys: number, dia: number) => sys < 90 || dia < 60,
+                    },
+                    {
+                      label: "🟢 Normal",
+                      range: "90–119 AND 60–79",
                       color: "bg-green-100 text-green-700",
-                      minSys: 0,
-                      maxSys: 119,
-                      minDia: 0,
-                      maxDia: 79,
+                      check: (sys: number, dia: number) =>
+                        sys >= 90 && sys < 120 && dia >= 60 && dia < 80,
                     },
                     {
-                      label: "Elevated",
-                      range: "120–129 / < 80",
+                      label: "🟡 Elevated",
+                      range: "120–129 AND < 80",
                       color: "bg-yellow-100 text-yellow-700",
-                      minSys: 120,
-                      maxSys: 129,
-                      minDia: 0,
-                      maxDia: 79,
+                      check: (sys: number, dia: number) =>
+                        sys >= 120 && sys <= 129 && dia < 80,
                     },
                     {
-                      label: "Stage 1 Hypertension",
-                      range: "130–139 / 80–89",
+                      label: "🟠 Stage 1 Hypertension",
+                      range: "130–139 OR 80–89",
                       color: "bg-orange-100 text-orange-700",
-                      minSys: 130,
-                      maxSys: 139,
-                      minDia: 80,
-                      maxDia: 89,
+                      check: (sys: number, dia: number) =>
+                        (sys >= 130 && sys <= 139) || (dia >= 80 && dia <= 89),
                     },
                     {
-                      label: "Stage 2 Hypertension",
-                      range: "≥ 140 / ≥ 90",
+                      label: "🔴 Stage 2 Hypertension",
+                      range: "≥ 140 AND ≥ 90",
                       color: "bg-red-100 text-red-700",
-                      minSys: 140,
-                      maxSys: 300,
-                      minDia: 90,
-                      maxDia: 200,
+                      check: (sys: number, dia: number) =>
+                        sys >= 140 && dia >= 90,
                     },
                   ].map((row, idx) => {
-                    const sys = data.formData.systolic;
-                    const dia = data.formData.diastolic;
-                    const active =
-                      sys >= row.minSys &&
-                      sys <= row.maxSys &&
-                      dia >= row.minDia &&
-                      dia <= row.maxDia;
+                    const sys = Number(data.formData.systolic);
+                    const dia = Number(data.formData.diastolic);
+                    const active = row.check(sys, dia);
 
                     return (
                       <tr key={idx} className={`${active ? row.color : ""}`}>
@@ -997,25 +1001,25 @@ function ResultsPage({
                 <tbody>
                   {[
                     {
-                      label: "Bradycardia",
+                      label: "🟡 Bradycardia",
                       range: "< 60 BPM",
                       color: "bg-yellow-50 text-yellow-700",
                       min: 0,
                       max: 59,
                     },
                     {
-                      label: "Normal",
+                      label: "🟢 Normal",
                       range: "60 – 100 BPM",
                       color: "bg-green-100 text-green-700",
                       min: 60,
                       max: 100,
                     },
                     {
-                      label: "Tachycardia",
+                      label: "🔴 Tachycardia",
                       range: "> 100 BPM",
                       color: "bg-red-100 text-red-700",
                       min: 101,
-                      max: 30000,
+                      max: 300,
                     },
                   ].map((row, idx) => {
                     const active =
@@ -1038,33 +1042,31 @@ function ResultsPage({
             {/* ADA FBS */}
             <div className="bg-white border rounded-xl p-4 shadow-sm">
               <h3 className="font-bold text-gray-800 mb-2 flex items-center">
-                🧪 Fasting Blood Sugar (ADA Official)
+                🧪 Random Blood Sugar (ADA Official)
               </h3>
 
               <table className="w-full text-sm">
                 <tbody>
                   {[
                     {
-                      label: "Normal",
+                      label: "🟢 Normal",
                       range: "< 140 mg/dL",
                       color: "bg-green-100 text-green-700",
                       min: 0,
                       max: 140,
                     },
                     {
-                      label: "Prediabetes",
+                      label: "🟡 Prediabetes Risk",
                       range: "141 – 199",
                       color: "bg-yellow-100 text-yellow-700",
                       min: 141,
                       max: 199,
                     },
-                
                     {
-                      label: "Diabetes Range",
+                      label: "🔴 Diabetes Range / High Risk",
                       range: "≥ 200",
                       color: "bg-red-100 text-red-700",
                       min: 200,
-              
                       max: 999,
                     },
                   ].map((row, idx) => {
@@ -1232,11 +1234,15 @@ export default function DiabetesRiskCalculator() {
       errors.push("Please select your family history");
     if (fbs === "" || fbs === null)
       errors.push("Fasting Blood Sugar is required");
-    else if (parseFloat(fbs) < 0) errors.push("FBS cannot be negative");
+    else if (parseFloat(fbs) < 0) errors.push("RBS cannot be negative");
 
     if (!systolic) errors.push("Systolic BP is required");
+    else if (parseInt(systolic) >= 300) errors.push("Systolic can be max 300");
     if (!diastolic) errors.push("Diastolic BP is required");
+    else if (parseInt(diastolic) >= 200)
+      errors.push("Diastolic can be max 200");
     if (!pulse) errors.push("Pulse Rate is required");
+    else if (parseInt(pulse) < 0) errors.push("Pulse cannot be negative");
 
     return errors;
   };
@@ -1310,7 +1316,7 @@ export default function DiabetesRiskCalculator() {
     } catch (e) {
       console.error("Failed to save to sessionStorage:", e);
     }
-
+    setShowResults(true);
     const payload = {
       age: ageValue,
       height_cm: getHeightInCm(),
@@ -1345,7 +1351,6 @@ export default function DiabetesRiskCalculator() {
       console.error("Error saving record:", error);
     }
 
-    setShowResults(true);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
@@ -1760,7 +1765,7 @@ export default function DiabetesRiskCalculator() {
         </FormRow>
 
         {/* FBS */}
-        <FormRow label="Fasting Blood Sugar" required>
+        <FormRow label="Random Blood Sugar (RBS)" required>
           <input
             type="number"
             value={fbs}
