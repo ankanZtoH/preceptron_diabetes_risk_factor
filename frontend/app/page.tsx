@@ -1063,8 +1063,8 @@ function ResultsPage({
                       label: "Diabetes Range",
                       range: "≥ 200",
                       color: "bg-red-100 text-red-700",
-                      min: 200
-              ,
+                      min: 200,
+              
                       max: 999,
                     },
                   ].map((row, idx) => {
