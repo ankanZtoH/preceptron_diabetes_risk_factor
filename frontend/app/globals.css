@@ -120,3 +120,15 @@
     @apply bg-background text-foreground;
   }
 }
+
+
+@media print {
+  body {
+    zoom: 0.70; /* Reduce to 60% of original size */
+  }
+  img{
+    display: block;
+    page-break-before: always; /* new page */
+    padding: 20px;
+  }
+}

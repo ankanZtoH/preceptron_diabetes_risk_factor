@@ -106,7 +106,7 @@ function ResultsPage({
   const bmi = data.formData?.bmi || 0;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 py-6 px-4">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 py-6 px-4" id="print-area">
       <div className="max-w-6xl mx-auto">
         <div className="bg-gradient-to-br from-blue-600 via-purple-600 to-pink-500 rounded-2xl shadow-2xl p-5 mb-6">
           <div className="flex items-center justify-between">
@@ -114,7 +114,7 @@ function ResultsPage({
               <Heart className="w-7 h-7 text-white mr-3" />
               <div>
                 <h1 className="text-2xl font-bold text-white">Your Results</h1>
-                <p className="text-white/90 text-sm">4 Key Health Metrics</p>
+                <p className="text-white/90 text-sm">Summary of Your Key Health Indicators</p>
               </div>
             </div>
             <button
@@ -425,15 +425,17 @@ function ResultsPage({
             className={`
     rounded-xl shadow-lg p-5 border-t-4
     ${
-      data.formData.systolic < 90 || data.formData.diastolic < 60
-        ? "border-blue-500 bg-blue-50" // LOW BP
-        : data.formData.systolic < 120 && data.formData.diastolic < 80
-        ? "border-green-500 bg-green-50" // NORMAL
-        : data.formData.systolic < 130 && data.formData.diastolic < 80
-        ? "border-yellow-500 bg-yellow-50" // ELEVATED
-        : data.formData.systolic < 140 || data.formData.diastolic < 90
-        ? "border-orange-500 bg-orange-50" // STAGE 1
-        : "border-red-500 bg-red-50" // STAGE 2
+        data.formData.systolic < 90 || data.formData.diastolic < 60
+          ? "border-blue-500 bg-blue-50" // LOW BP
+          : data.formData.systolic <= 120 && data.formData.diastolic <= 80
+          ? "border-green-500 bg-green-50" // NORMAL
+          : data.formData.systolic >=120 && data.formData.systolic < 130 && (data.formData.diastolic >= 80 && data.formData.diastolic <90)
+          ? "border-yellow-500 bg-yellow-50" // ELEVATED
+          : (data.formData.systolic >= 130 && data.formData.systolic < 140) || (data.formData.diastolic >= 80 && data.formData.diastolic <90)
+          ? "border-orange-500 bg-orange-50" // STAGE 1
+          :(data.formData.systolic >= 140 && data.formData.systolic < 180) || (data.formData.diastolic >= 90 && data.formData.diastolic <120)
+          ? "border-red-400 bg-red-50" // STAGE 2
+          : "border-red-600 bg-red-50" // crisis
     }
   `}
           >
@@ -466,12 +468,14 @@ function ResultsPage({
       ${
         data.formData.systolic < 90 || data.formData.diastolic < 60
           ? "text-blue-600"
-          : data.formData.systolic < 120 && data.formData.diastolic < 80
+          : data.formData.systolic <= 120 && data.formData.diastolic <= 80
           ? "text-green-600"
-          : data.formData.systolic < 130 && data.formData.diastolic < 80
+          : data.formData.systolic >=120 && data.formData.systolic < 130 && (data.formData.diastolic >= 80 && data.formData.diastolic <90)
           ? "text-yellow-600"
-          : data.formData.systolic < 140 || data.formData.diastolic < 90
+          : (data.formData.systolic >= 130 && data.formData.systolic < 140) || (data.formData.diastolic >= 80 && data.formData.diastolic <90)
           ? "text-orange-600"
+          :(data.formData.systolic >= 140 && data.formData.systolic < 180) || (data.formData.diastolic >= 90 && data.formData.diastolic <120)
+          ? "text-red-600"
           : "text-red-600"
       }
     `}
@@ -486,38 +490,45 @@ function ResultsPage({
       ${
         data.formData.systolic < 90 || data.formData.diastolic < 60
           ? "text-blue-600"
-          : data.formData.systolic < 120 && data.formData.diastolic < 80
+          : data.formData.systolic <= 120 && data.formData.diastolic <= 80
           ? "text-green-600"
-          : data.formData.systolic < 130 && data.formData.diastolic < 80
+          : data.formData.systolic >=120 && data.formData.systolic < 130 && (data.formData.diastolic >= 80 && data.formData.diastolic <90)
           ? "text-yellow-600"
-          : data.formData.systolic < 140 || data.formData.diastolic < 90
+          : (data.formData.systolic >= 130 && data.formData.systolic < 140) || (data.formData.diastolic >= 80 && data.formData.diastolic <90)
           ? "text-orange-600"
+          : (data.formData.systolic >= 140 && data.formData.systolic < 180) || (data.formData.diastolic >= 90 && data.formData.diastolic <120)
+          ? "text-red-400"
           : "text-red-600"
       }
     `}
             >
               {data.formData.systolic < 90 || data.formData.diastolic < 60
                 ? "🔵 Low Blood Pressure (Hypotension)"
-                : data.formData.systolic < 120 && data.formData.diastolic < 80
+                : data.formData.systolic <= 120 && data.formData.diastolic <= 80
                 ? "🟢 Normal Blood Pressure"
-                : data.formData.systolic < 130 && data.formData.diastolic < 80
+                : data.formData.systolic >=120 && data.formData.systolic < 130 && (data.formData.diastolic >= 80 && data.formData.diastolic <90)
                 ? "🟡 Elevated Blood Pressure"
-                : data.formData.systolic < 140 || data.formData.diastolic < 90
-                ? "🟠 High Blood Pressure (Stage 1)"
-                : "🔴 High Blood Pressure (Stage 2)"}
+                : (data.formData.systolic >= 130 && data.formData.systolic < 140) || (data.formData.diastolic >= 80 && data.formData.diastolic <90)
+                ? "🟠 High Blood Pressure (Stage 1)" 
+                : (data.formData.systolic >= 140 && data.formData.systolic < 180) || (data.formData.diastolic >= 90 && data.formData.diastolic <120)
+                ? "🔴 High Blood Pressure (Stage 2)"
+                : "🔴 Hypertensive Crisis (Seek Medical Attention)"}
             </p>
 
             {/* Awareness Text */}
             <p className="text-sm font-semibold text-gray-700 mt-1">
               {data.formData.systolic < 90 || data.formData.diastolic < 60
                 ? "* Low BP may cause dizziness, fatigue. Stay hydrated and consult a doctor if symptoms persist."
-                : data.formData.systolic < 120 && data.formData.diastolic < 80
+                : data.formData.systolic <= 120 && data.formData.diastolic <= 80
                 ? "* Your BP is in the healthy range. Maintain a good lifestyle!"
-                : data.formData.systolic < 130 && data.formData.diastolic < 80
+                : data.formData.systolic >=120 && data.formData.systolic < 130 && (data.formData.diastolic >= 80 && data.formData.diastolic <90)
                 ? "* Elevated BP is an early warning. Lifestyle correction is strongly recommended."
-                : data.formData.systolic < 140 || data.formData.diastolic < 90
+                : (data.formData.systolic >= 130 && data.formData.systolic < 140) || (data.formData.diastolic >= 80 && data.formData.diastolic <90)
                 ? "* Stage 1 Hypertension. Start active lifestyle changes and monitor BP regularly."
-                : "* Stage 2 Hypertension is serious. Medical evaluation is strongly advised."}
+                : (data.formData.systolic >= 140 && data.formData.systolic < 180) || (data.formData.diastolic >= 90 && data.formData.diastolic <120)
+                ?"* Stage 2 Hypertension is serious. Medical evaluation is strongly advised."
+                :"* Hypertensive Crisis is a medical emergency — extremely high BP can damage your heart, brain, and kidneys within minutes."
+              }  
             </p>
           </div>
 
@@ -937,42 +948,51 @@ function ResultsPage({
               </h3>
 
               <table className="w-full text-sm">
+           
                 <tbody>
                   {[
                     {
-                      label: "🔵 Low Blood Pressure (Hypotension)",
-                      range: "< 90 OR < 60",
-                      color: "bg-blue-100 text-blue-700",
-                      check: (sys: number, dia: number) => sys < 90 || dia < 60,
-                    },
-                    {
-                      label: "🟢 Normal",
-                      range: "90–119 AND 60–79",
-                      color: "bg-green-100 text-green-700",
-                      check: (sys: number, dia: number) =>
-                        sys >= 90 && sys < 120 && dia >= 60 && dia < 80,
-                    },
-                    {
-                      label: "🟡 Elevated",
-                      range: "120–129 AND < 80",
-                      color: "bg-yellow-100 text-yellow-700",
-                      check: (sys: number, dia: number) =>
-                        sys >= 120 && sys <= 129 && dia < 80,
-                    },
-                    {
-                      label: "🟠 Stage 1 Hypertension",
-                      range: "130–139 OR 80–89",
-                      color: "bg-orange-100 text-orange-700",
-                      check: (sys: number, dia: number) =>
-                        (sys >= 130 && sys <= 139) || (dia >= 80 && dia <= 89),
-                    },
-                    {
-                      label: "🔴 Stage 2 Hypertension",
-                      range: "≥ 140 AND ≥ 90",
-                      color: "bg-red-100 text-red-700",
-                      check: (sys: number, dia: number) =>
-                        sys >= 140 && dia >= 90,
-                    },
+  label: "🔵 Low Blood Pressure (Hypotension)",
+  range: "< 90 OR < 60",
+  color: "bg-blue-100 text-blue-700",
+  check: (sys: number, dia: number) => sys < 90 || dia < 60,
+},
+{
+  label: "🟢 Normal",
+  range: "≤ 120 AND ≤ 80",
+  color: "bg-green-100 text-green-700",
+  check: (sys: number, dia: number) =>
+    sys <= 120 && dia <= 80,
+},
+{
+  label: "🟡 Elevated",
+  range: "120–129 AND 80–89",
+  color: "bg-yellow-100 text-yellow-700",
+  check: (sys: number, dia: number) =>
+    sys >= 120 && sys < 130 && dia >= 80 && dia < 90,
+},
+{
+  label: "🟠 Stage 1 Hypertension",
+  range: "130–139 OR 80–89",
+  color: "bg-orange-100 text-orange-700",
+  check: (sys: number, dia: number) =>
+    (sys >= 130 && sys < 140) || (dia >= 80 && dia < 90),
+},
+{
+  label: "🔴 Stage 2 Hypertension",
+  range: "140–179 OR 90–119",
+  color: "bg-red-100 text-red-700",
+  check: (sys: number, dia: number) =>
+    (sys >= 140 && sys < 180) || (dia >= 90 && dia < 120),
+},
+{
+  label: "🔴 Hypertensive Crisis (Seek Medical Attention)",
+  range: "≥ 180 OR ≥ 120",
+  color: "bg-red-100 text-red-700",
+  check: (sys: number, dia: number) =>
+    sys >= 180 || dia >= 120,
+},
+
                   ].map((row, idx) => {
                     const sys = Number(data.formData.systolic);
                     const dia = Number(data.formData.diastolic);
@@ -1095,14 +1115,20 @@ function ResultsPage({
           </p>
         </div>
 
+
+        <div className="print-extra-page print-page">
+              <img className="hidden" src="final-perceptron-poster.jpeg" alt="" />
+
+        </div>
+
         {/* Action Buttons */}
         <div className="flex gap-4 justify-center flex-wrap mt-5">
-          {/* <button
+          <button
             onClick={onBack}
             className="bg-gray-600 hover:bg-gray-700 text-white font-semibold py-3 px-6 rounded-lg"
           >
             ← Back to Form
-          </button> */}
+          </button>
           <button
             onClick={onRecalculate}
             className="bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-700 hover:to-red-700 text-white font-semibold py-3 px-6 rounded-lg"
@@ -1115,6 +1141,9 @@ function ResultsPage({
           >
             🖨️ Print
           </button>
+
+
+          
         </div>
       </div>
     </div>
